@@ -12,3 +12,6 @@
 @media(max-width:600px){.benefits-list,.compact-problems{grid-template-columns:1fr}.compact-problems .problem-card{min-height:0}.demo-image{height:500px}.trust-card,.assurance-card{padding:24px}.handoff-flow{display:grid;grid-template-columns:1fr;text-align:center}.handoff-flow b{transform:rotate(-90deg)}.sector-grid{grid-template-columns:1fr 1fr}.duration-note{padding:17px}.plan-card h3{font-size:26px}}
 .mobile-menu{min-width:44px;width:44px;min-height:44px}
 @media(max-width:360px){.sector-grid{grid-template-columns:1fr}.demo-image{height:430px}.data-points li{padding-left:12px}}
+
+.limited-offer{max-width:900px;margin:0 auto 38px;padding:28px;border:1px solid rgba(214,177,83,.35);border-radius:20px;background:linear-gradient(180deg,rgba(214,177,83,.08),rgba(255,255,255,.02));text-align:center}.limited-offer h3{margin:8px 0 10px;font-size:clamp(26px,4vw,40px)}.limited-offer p{max-width:720px;margin:0 auto 12px;color:var(--muted)}.limited-offer .limited-offer-note{color:var(--text);font-weight:700}.limited-offer .btn{margin-top:8px}.setup-price del{color:var(--muted);font-weight:600}.setup-price strong{color:var(--gold-light)}
+@media(max-width:600px){.limited-offer{padding:22px 18px;margin-bottom:30px}.limited-offer .btn{width:100%;justify-content:center}}
