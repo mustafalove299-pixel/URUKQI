@@ -448,8 +448,8 @@
 }
 
 /* ================================================================
-   URUKQI TRADE — hero promo banner
-   Scoped entirely to .hero-trade-promo. On desktop the promo is
+   URUKQI TRADE — hero product launch card
+   Scoped entirely to .hero-trade-promo. On desktop the card is
    absolutely positioned inside the hero's existing media grid area,
    so it occupies the already-empty space above the Babylon Gate
    without participating in layout: no existing hero rule is changed
@@ -464,26 +464,31 @@
   inset-inline: 0;
   margin-inline: auto;
   z-index: 3;
-  width: min(100%, 470px);
+  width: min(100%, 510px);
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
-  border: 1px solid var(--gold-border);
+  gap: 14px;
+  padding: 10px 15px;
+  border: 1px solid rgba(200,163,92,.45);
   border-radius: 20px;
   background:
-    radial-gradient(circle at 12% 0%, rgba(200,163,92,.16), transparent 62%),
-    linear-gradient(145deg, rgba(13,19,27,.95), rgba(5,7,10,.92));
-  box-shadow: 0 18px 46px rgba(0,0,0,.42);
+    radial-gradient(120% 90% at 82% 0%, rgba(200,163,92,.10), transparent 62%),
+    linear-gradient(150deg, rgba(12,18,28,.94), rgba(5,8,12,.92));
+  box-shadow:
+    inset 0 1px 0 rgba(234,212,156,.16),
+    0 16px 40px rgba(0,0,0,.45),
+    0 0 24px rgba(200,163,92,.07);
   color: var(--text);
-  transition: border-color .25s, background-color .25s, box-shadow .25s;
+  transition: border-color .25s, box-shadow .25s;
 }
 
 .hero-trade-promo:hover {
-  border-color: rgba(200,163,92,.6);
-  background-color: rgba(200,163,92,.04);
-  box-shadow: 0 22px 54px rgba(0,0,0,.5), 0 0 26px rgba(200,163,92,.12);
+  border-color: rgba(234,212,156,.65);
+  box-shadow:
+    inset 0 1px 0 rgba(234,212,156,.22),
+    0 18px 46px rgba(0,0,0,.5),
+    0 0 32px rgba(200,163,92,.13);
 }
 
 .hero-trade-promo:focus-visible {
@@ -491,10 +496,23 @@
   outline-offset: 3px;
 }
 
+/* ---- emblem ---- */
+
 .hero-trade-promo-logo {
+  position: relative;
   flex: 0 0 auto;
-  width: 74px;
+  width: 126px;
   display: block;
+}
+
+.hero-trade-promo-logo::before {
+  content: "";
+  position: absolute;
+  inset: -14%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,163,92,.20), transparent 68%);
+  filter: blur(10px);
+  z-index: -1;
 }
 
 .hero-trade-promo-logo img {
@@ -504,84 +522,131 @@
   aspect-ratio: 1;
 }
 
+/* ---- content side + gold divider ---- */
+
 .hero-trade-promo-body {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 2px;
+  gap: 4px;
   min-width: 0;
+  padding-inline-end: 14px;
+}
+
+.hero-trade-promo-body::before {
+  content: "";
+  position: absolute;
+  inset-inline-end: 0;
+  top: 4%;
+  bottom: 4%;
+  width: 1px;
+  background: linear-gradient(180deg,
+    rgba(200,163,92,0),
+    rgba(200,163,92,.55) 22%,
+    rgba(200,163,92,.55) 78%,
+    rgba(200,163,92,0));
 }
 
 .hero-trade-promo-badge {
-  padding: 3px 12px;
-  border: 1px solid var(--gold-border);
+  padding: 2px 11px;
+  border: 1px solid rgba(200,163,92,.5);
   border-radius: 999px;
-  background: rgba(200,163,92,.12);
+  background: rgba(200,163,92,.08);
+  box-shadow: 0 0 12px rgba(200,163,92,.12);
   color: var(--gold-light);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 900;
-  letter-spacing: 1px;
+  line-height: 1.5;
+  letter-spacing: 1.6px;
 }
 
 .hero-trade-promo-title {
-  font-size: 21px;
+  font-size: 29px;
   font-weight: 900;
-  line-height: 1.2;
-  color: var(--gold-light);
-  letter-spacing: .5px;
+  line-height: 1.04;
+  color: #f7f3e7;
+  letter-spacing: .4px;
 }
 
 .hero-trade-promo-title b {
-  font-weight: 700;
-  color: var(--text);
+  font-weight: 800;
+  color: var(--gold);
 }
 
 .hero-trade-promo-headline {
-  font-size: 13px;
-  font-weight: 800;
-  line-height: 1.5;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text);
 }
 
 .hero-trade-promo-offer {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 4px;
-  padding: 6px 12px;
-  border-radius: 10px;
-  background: var(--gold);
-  color: #111;
-  font-size: 13px;
-  font-weight: 900;
-  transition: transform .25s;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 1px;
 }
 
-.hero-trade-promo:hover .hero-trade-promo-offer {
-  background: var(--gold-light);
+.hero-trade-promo-strip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border: 1px solid rgba(200,163,92,.42);
+  border-radius: 9px;
+  background: rgba(200,163,92,.05);
+  color: var(--gold-light);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.hero-trade-promo-strip svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  color: var(--gold);
 }
 
 .hero-trade-promo-note {
   color: var(--muted);
-  font-size: 11px;
-  line-height: 1.5;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
 .hero-trade-promo-cta {
   color: var(--gold-light);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
-  line-height: 1.5;
+  line-height: 1.4;
+}
+
+.hero-trade-promo:hover .hero-trade-promo-cta {
+  color: var(--gold);
 }
 
 @media (max-width: 1200px) {
-  .hero-trade-promo { padding: 9px 12px; gap: 10px; }
-  .hero-trade-promo-logo { width: 62px; }
-  .hero-trade-promo-title { font-size: 18px; }
-  .hero-trade-promo-headline { font-size: 12px; }
-  .hero-trade-promo-offer { padding: 5px 11px; font-size: 12px; }
-  .hero-trade-promo-badge { padding: 2px 10px; font-size: 10px; }
-  .hero-trade-promo-note,
-  .hero-trade-promo-cta { font-size: 10px; }
+  .hero-trade-promo { gap: 12px; padding: 9px 13px; }
+  .hero-trade-promo-logo { width: 110px; }
+  .hero-trade-promo-body { gap: 3px; padding-inline-end: 12px; }
+  .hero-trade-promo-title { font-size: 26px; }
+  .hero-trade-promo-headline { font-size: 15px; }
+  .hero-trade-promo-strip { font-size: 12px; padding: 3px 9px; }
+  .hero-trade-promo-strip svg { width: 13px; height: 13px; }
+  .hero-trade-promo-note { font-size: 11px; }
+  .hero-trade-promo-cta { font-size: 12px; }
+}
+
+@media (max-width: 1000px) {
+  .hero-trade-promo-logo { width: 96px; }
+  .hero-trade-promo-title { font-size: 23px; }
+  .hero-trade-promo-headline { font-size: 14px; }
+  .hero-trade-promo-strip { font-size: 11.5px; }
+  .hero-trade-promo-note { font-size: 10.5px; }
+  .hero-trade-promo-cta { font-size: 11.5px; }
 }
 
 @media (max-width: 760px) {
@@ -593,20 +658,28 @@
     margin: 28px auto 0;
     flex-direction: column;
     text-align: center;
-    gap: 12px;
-    padding: 20px 18px;
+    gap: 10px;
+    padding: 22px 20px;
   }
-  .hero-trade-promo-logo { width: 104px; }
-  .hero-trade-promo-body { align-items: center; }
+  .hero-trade-promo-body { display: contents; }
+  .hero-trade-promo-badge { order: 1; }
+  .hero-trade-promo-logo { width: 104px; order: 2; }
+  .hero-trade-promo-title { order: 3; }
+  .hero-trade-promo-headline { order: 4; }
+  .hero-trade-promo-offer { order: 5; }
+  .hero-trade-promo-cta { order: 6; }
+  .hero-trade-promo-title { font-size: 30px; }
+  .hero-trade-promo-headline { font-size: 17px; }
+  .hero-trade-promo-offer { flex-direction: column; justify-content: center; gap: 7px; }
+  .hero-trade-promo-strip { font-size: 14px; padding: 5px 12px; }
 }
 
 @media (max-width: 600px) {
   .hero-trade-promo { width: 100%; }
-  .hero-trade-promo-logo { width: 92px; }
-  .hero-trade-promo-title { font-size: 21px; }
+  .hero-trade-promo-logo { width: 96px; }
+  .hero-trade-promo-title { font-size: 28px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-trade-promo,
-  .hero-trade-promo-offer { transition: none; }
+  .hero-trade-promo { transition: none; }
 }
