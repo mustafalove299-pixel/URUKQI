@@ -446,3 +446,167 @@
   .trade-quote { padding: 18px; }
   .trade-tags li { padding: 10px 32px 10px 12px; }
 }
+
+/* ================================================================
+   URUKQI TRADE — hero promo banner
+   Scoped entirely to .hero-trade-promo. On desktop the promo is
+   absolutely positioned inside the hero's existing media grid area,
+   so it occupies the already-empty space above the Babylon Gate
+   without participating in layout: no existing hero rule is changed
+   and the gate keeps its original rendered position.
+   ================================================================ */
+
+.hero-trade-promo {
+  position: absolute;
+  grid-column: 2;
+  grid-row: 1;
+  top: 0;
+  inset-inline: 0;
+  margin-inline: auto;
+  z-index: 3;
+  width: min(100%, 470px);
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--gold-border);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(200,163,92,.16), transparent 62%),
+    linear-gradient(145deg, rgba(13,19,27,.95), rgba(5,7,10,.92));
+  box-shadow: 0 18px 46px rgba(0,0,0,.42);
+  color: var(--text);
+  transition: border-color .25s, background-color .25s, box-shadow .25s;
+}
+
+.hero-trade-promo:hover {
+  border-color: rgba(200,163,92,.6);
+  background-color: rgba(200,163,92,.04);
+  box-shadow: 0 22px 54px rgba(0,0,0,.5), 0 0 26px rgba(200,163,92,.12);
+}
+
+.hero-trade-promo:focus-visible {
+  outline: 3px solid var(--gold-light);
+  outline-offset: 3px;
+}
+
+.hero-trade-promo-logo {
+  flex: 0 0 auto;
+  width: 74px;
+  display: block;
+}
+
+.hero-trade-promo-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.hero-trade-promo-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+}
+
+.hero-trade-promo-badge {
+  padding: 3px 12px;
+  border: 1px solid var(--gold-border);
+  border-radius: 999px;
+  background: rgba(200,163,92,.12);
+  color: var(--gold-light);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.hero-trade-promo-title {
+  font-size: 21px;
+  font-weight: 900;
+  line-height: 1.2;
+  color: var(--gold-light);
+  letter-spacing: .5px;
+}
+
+.hero-trade-promo-title b {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.hero-trade-promo-headline {
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.hero-trade-promo-offer {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: var(--gold);
+  color: #111;
+  font-size: 13px;
+  font-weight: 900;
+  transition: transform .25s;
+}
+
+.hero-trade-promo:hover .hero-trade-promo-offer {
+  background: var(--gold-light);
+}
+
+.hero-trade-promo-note {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.hero-trade-promo-cta {
+  color: var(--gold-light);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+@media (max-width: 1200px) {
+  .hero-trade-promo { padding: 9px 12px; gap: 10px; }
+  .hero-trade-promo-logo { width: 62px; }
+  .hero-trade-promo-title { font-size: 18px; }
+  .hero-trade-promo-headline { font-size: 12px; }
+  .hero-trade-promo-offer { padding: 5px 11px; font-size: 12px; }
+  .hero-trade-promo-badge { padding: 2px 10px; font-size: 10px; }
+  .hero-trade-promo-note,
+  .hero-trade-promo-cta { font-size: 10px; }
+}
+
+@media (max-width: 760px) {
+  .hero-trade-promo {
+    position: static;
+    inset-inline: auto;
+    order: 2;
+    width: min(88vw, 470px);
+    margin: 28px auto 0;
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+    padding: 20px 18px;
+  }
+  .hero-trade-promo-logo { width: 104px; }
+  .hero-trade-promo-body { align-items: center; }
+}
+
+@media (max-width: 600px) {
+  .hero-trade-promo { width: 100%; }
+  .hero-trade-promo-logo { width: 92px; }
+  .hero-trade-promo-title { font-size: 21px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-trade-promo,
+  .hero-trade-promo-offer { transition: none; }
+}
