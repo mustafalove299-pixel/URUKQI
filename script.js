@@ -18,47 +18,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }));
   }
 
-  const businessType = document.getElementById("businessType");
-  const businessProblem = document.getElementById("businessProblem");
-  const findSolution = document.getElementById("findSolution");
-  const solutionResult = document.getElementById("solutionResult");
-
-  const solutions = {
-    sales: ["نظام CRM ومتابعة المبيعات", "ترتيب رحلة العميل من أول تواصل إلى المتابعة والبيع."],
-    customers: ["نظام متابعة العملاء", "تنظيم المتابعة واستعادة العملاء غير النشطين وفق قواعد مناسبة."],
-    orders: ["نظام إدارة الطلبات", "جمع الطلبات وتنظيم مراحلها وتقليل المتابعة اليدوية."],
-    inventory: ["أتمتة المخزون والتنبيهات", "تنبيهات للحالات المهمة مثل النقص أو تغير الحالة."],
-    support: ["خدمة عملاء ذكية", "التعامل مع الأسئلة المتكررة وتحويل الحالات المهمة للموظف المناسب."],
-    finance: ["الفواتير والتحصيل", "تنظيم الإرسال والتذكير والمتابعة وفق قواعد العمل."],
-    reports: ["التقارير والبيانات", "جمع البيانات وإنشاء تقارير وتنبيهات تساعد الإدارة."],
-    employees: ["أتمتة العمليات الداخلية", "تحديد المهام المتكررة وبناء مسار واضح بين الموظفين."],
-    documents: ["معالجة المستندات والبيانات", "استخراج وتنظيم المعلومات المتكررة من الملفات والمرفقات."],
-    marketing: ["أتمتة التسويق والمتابعة", "ربط الحملات والعملاء والمتابعة ضمن مسار منظم."],
-    appointments: ["المواعيد والتذكيرات", "تنظيم المواعيد وإرسال التذكيرات والمتابعة عند الحاجة."],
-    other: ["دراسة مخصصة", "أخبرنا بالمشكلة كما تحدث في الواقع وسنحدد إن كانت قابلة للتحويل إلى نظام."]
+  // Desktop dropdowns (الحلول / القطاعات): open on hover via CSS, and on click/keyboard here.
+  const navGroups = Array.from(document.querySelectorAll(".nav-group"));
+  const closeGroup = group => {
+    group.classList.remove("open");
+    const trigger = group.querySelector(".nav-trigger");
+    if (trigger) trigger.setAttribute("aria-expanded", "false");
   };
-
-  const businessLabels = {
-    store: "المتاجر والتجارة", pharmacy: "الصيدليات", restaurant: "المطاعم والمقاهي",
-    "small-company": "الشركات الصغيرة", "medium-company": "الشركات المتوسطة",
-    enterprise: "الشركات الكبيرة والمؤسسات", factory: "المصانع والإنتاج", services: "الخدمات والمكاتب"
-  };
-
-  if (findSolution && businessType && businessProblem && solutionResult) {
-    findSolution.addEventListener("click", () => {
-      const type = businessType.value;
-      const problem = businessProblem.value;
-      if (!type || !problem) {
-        solutionResult.innerHTML = "<strong>اختر نشاطك والمشكلة أولًا.</strong>";
-        return;
-      }
-      const [name, desc] = solutions[problem] || solutions.other;
-      const activity = businessLabels[type] || "نشاطك";
-      solutionResult.innerHTML = `<strong>وجدنا نقطة بداية محتملة لك.</strong><br><b>${name}</b><br>${desc}<br><small>لـ${activity} · هذه نتيجة أولية وليست تشخيصًا نهائيًا.</small><br><a class="finder-contact" href="https://wa.me/9647711910777" target="_blank" rel="noopener">أريد من URUKQI دراسة هذه العملية ←</a>`;
+  navGroups.forEach(group => {
+    const trigger = group.querySelector(".nav-trigger");
+    if (!trigger) return;
+    trigger.addEventListener("click", () => {
+      const open = !group.classList.contains("open");
+      navGroups.forEach(closeGroup);
+      group.classList.toggle("open", open);
+      trigger.setAttribute("aria-expanded", String(open));
     });
-  }
+    group.addEventListener("keydown", event => {
+      if (event.key === "Escape") { closeGroup(group); trigger.focus(); }
+    });
+    group.addEventListener("focusout", event => {
+      if (!group.contains(event.relatedTarget)) closeGroup(group);
+    });
+    group.querySelectorAll("a").forEach(link => link.addEventListener("click", () => closeGroup(group)));
+  });
+  document.addEventListener("click", event => {
+    if (!event.target.closest(".nav-group")) navGroups.forEach(closeGroup);
+  });
 
-  const revealElements = document.querySelectorAll(".problem-card, .solution-card, .industry, .process-card, .plan-card, .comparison-side, .provide-grid article, .why-grid article, .workflow-track > div");
+  const revealElements = document.querySelectorAll(".problem-card, .solution-card, .industry, .process-card, .plan-card, .comparison-side, .provide-grid article, .why-grid article, .workflow-track > div, .category-card");
   revealElements.forEach(el => el.classList.add("reveal"));
 
   if ("IntersectionObserver" in window) {
