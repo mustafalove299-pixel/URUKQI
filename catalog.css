@@ -383,3 +383,8 @@
 
 .explorer-partial { margin: -6px 0 18px; color: var(--muted); font-size: 13px; }
 .explorer-partial a { color: var(--gold-light); }
+
+/* lead capture: spam trap stays out of view and out of the tab order */
+.form-trap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+.request-form { position: relative; }
+.request-form button[aria-busy="true"] { opacity: .75; cursor: progress; }

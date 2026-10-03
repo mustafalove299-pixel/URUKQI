@@ -1,0 +1,3 @@
+# local Cloudflare/Wrangler build and dev state — never commit or publish
+.wrangler/
+.dev.vars

@@ -1,8 +1,9 @@
 /* ================================================================
    URUKQI request form — pre-fills the selected sector / solution /
-   problem and prepares a structured WhatsApp message (or e-mail).
-   There is no backend: nothing is "sent" until the visitor presses
-   send inside WhatsApp or their mail app, and the UI says so.
+   problem, submits the request to /api/lead (Cloudflare Pages Function)
+   and only after the server confirms capture says «تم استلام طلبك»,
+   then offers WhatsApp as the next step. If capture fails, the form
+   keeps its contents, allows retry and offers WhatsApp as a fallback.
    Requires catalog-data.js and catalog-render.js.
    ================================================================ */
 (function () {
@@ -22,6 +23,11 @@
   const status = $("requestStatus");
   const required = ["name", "phone", "sector", "problem"];
   let chosenProblem = null;   // problem picked on the site, kept even if the visitor rewrites the text
+  let chosenSolutionId = null;
+  const openedAt = Date.now();
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const submitLabel = submitBtn ? submitBtn.innerHTML : "";
+  const ENDPOINT = "api/lead";
 
   const toLatinDigits = s => String(s || "").replace(/[٠-٩]/g, d => String(d.charCodeAt(0) - 0x0660))
     .replace(/[۰-۹]/g, d => String(d.charCodeAt(0) - 0x06F0));
@@ -37,6 +43,7 @@
     const sector = sectorSlug && idx.sectors[sectorSlug];
     const problem = params.problem && idx.problems[params.problem];
     chosenProblem = problem || null;
+    chosenSolutionId = entry ? entry.sol.id : null;
 
     if (sector) {
       fields.sector.value = sector.slug;
@@ -90,6 +97,7 @@
       selection.hidden = true;
       fields.solution.value = "";
       chosenProblem = null;
+      chosenSolutionId = null;
       fields.sector.focus();
     });
   }
@@ -154,28 +162,107 @@
     return toLatinDigits(["طلب نظام — موقع URUKQI", ""].concat(lines.filter(Boolean)).join("\n"));
   }
 
-  form.addEventListener("submit", e => {
+  // Only business-request information is sent — no tracking or device data.
+  function payload() {
+    return {
+      name: fields.name.value.trim(),
+      company: fields.company.value.trim(),
+      phone: toLatinDigits(fields.phone.value.trim()),
+      sector: fields.sector.value,
+      sectorLabel: selectedText(fields.sector),
+      solutionId: chosenSolutionId || "",
+      solution: fields.solution.value.trim(),
+      problemId: chosenProblem ? chosenProblem.id : "",
+      problemLabel: chosenProblem ? chosenProblem.title : "",
+      problem: fields.problem.value.trim(),
+      current: fields.current.value.trim(),
+      users: fields.users.value,
+      branches: fields.branches.value,
+      existing: fields.existing.value,
+      needs: Array.from(form.querySelectorAll('input[name="needs"]:checked')).map(c => c.value),
+      details: fields.details.value.trim(),
+      sourcePage: location.pathname,
+      website: (form.querySelector('[name="website"]') || {}).value || "",
+      elapsedMs: Date.now() - openedAt
+    };
+  }
+
+  function links(ref) {
+    const message = buildMessage() + (ref ? `\nرقم الطلب: ${ref}` : "");
+    return {
+      wa: `https://wa.me/${catalog.contact.whatsapp}?text=${encodeURIComponent(message)}`,
+      mail: `mailto:${catalog.contact.email}?subject=${encodeURIComponent("طلب نظام — موقع URUKQI")}&body=${encodeURIComponent(message)}`
+    };
+  }
+
+  function setBusy(busy) {
+    if (!submitBtn) return;
+    submitBtn.disabled = busy;
+    submitBtn.setAttribute("aria-busy", String(busy));
+    submitBtn.innerHTML = busy ? "جارٍ إرسال طلبك…" : submitLabel;
+  }
+
+  function showStatus(kind, html) {
+    status.className = `request-status is-${kind}`;
+    status.innerHTML = html;
+    status.hidden = false;
+    status.focus({ preventScroll: false });
+  }
+
+  const failText = {
+    rate_limited: "أرسلت عدة طلبات خلال وقت قصير. انتظر بضع دقائق ثم حاول مرة أخرى، أو تابع معنا عبر WhatsApp.",
+    validation: "بعض البيانات غير صالحة. راجع الحقول ثم حاول مرة أخرى.",
+    default: "تعذّر إرسال طلبك الآن. بياناتك ما زالت في النموذج — حاول مرة أخرى، أو تابع معنا عبر WhatsApp."
+  };
+
+  let sending = false;
+  form.addEventListener("submit", async e => {
     e.preventDefault();
+    if (sending) return;
     const invalid = validate();
     if (invalid) {
-      status.className = "request-status is-error";
-      status.textContent = "أكمل الحقول المطلوبة المشار إليها.";
-      status.hidden = false;
+      showStatus("error", "أكمل الحقول المطلوبة المشار إليها.");
       invalid.focus();
       return;
     }
-    const message = buildMessage();
-    const waUrl = `https://wa.me/${catalog.contact.whatsapp}?text=${encodeURIComponent(message)}`;
-    const mailUrl = `mailto:${catalog.contact.email}?subject=${encodeURIComponent("طلب نظام — موقع URUKQI")}&body=${encodeURIComponent(message)}`;
 
-    window.open(waUrl, "_blank", "noopener");
+    sending = true;
+    setBusy(true);
+    status.hidden = true;
+    let result = null;
+    let errorCode = "default";
+    try {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 15000);
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload()),
+        credentials: "same-origin",
+        signal: ctrl.signal
+      });
+      clearTimeout(timer);
+      const data = await res.json().catch(() => null);
+      if (res.ok && data && data.ok) result = data;
+      else if (data && (data.error === "rate_limited" || data.error === "validation")) errorCode = data.error;
+    } catch (err) {
+      result = null;
+    }
+    sending = false;
+    setBusy(false);
 
-    status.className = "request-status is-ready";
-    status.innerHTML = `<strong>جهّزنا رسالتك في WhatsApp.</strong>
-<p>أكمل الإرسال من نافذة WhatsApp — لن يصلنا طلبك قبل أن تضغط «إرسال» هناك. يمكنك بعدها إرفاق لقطات الشاشة أو ملفات Excel أو نماذج الفواتير داخل نفس المحادثة.</p>
-<div class="request-status-actions"><a class="btn btn-primary btn-sm" href="${R.esc(waUrl)}" target="_blank" rel="noopener">افتح WhatsApp مرة أخرى</a><a class="btn btn-secondary btn-sm" href="${R.esc(mailUrl)}">أرسل عبر البريد بدلًا من ذلك</a></div>`;
-    status.hidden = false;
-    status.focus({ preventScroll: false });
+    if (result) {
+      const l = links(result.ref);
+      showStatus("ready", `<strong>تم استلام طلبك بنجاح.</strong>
+<p>رقم الطلب: <b dir="ltr">${R.esc(result.ref)}</b>. سنراجع طلبك ونتواصل معك على الرقم الذي أدخلته. يمكنك الآن متابعة المحادثة معنا عبر WhatsApp وإرفاق لقطات الشاشة أو ملفات Excel أو نماذج الفواتير.</p>
+<div class="request-status-actions"><a class="btn btn-primary btn-sm" href="${R.esc(l.wa)}" target="_blank" rel="noopener">متابعة عبر واتساب</a></div>`);
+      return;
+    }
+
+    const l = links("");
+    showStatus("error", `<strong>${R.esc(failText[errorCode] || failText.default)}</strong>
+<p>لم يصلنا الطلب بعد. لن يُعتبر مُرسلًا عبر WhatsApp إلا بعد أن تضغط «إرسال» هناك.</p>
+<div class="request-status-actions"><button type="submit" class="btn btn-primary btn-sm">حاول مرة أخرى</button><a class="btn btn-secondary btn-sm" href="${R.esc(l.wa)}" target="_blank" rel="noopener">المتابعة عبر WhatsApp</a><a class="btn btn-secondary btn-sm" href="${R.esc(l.mail)}">أرسل عبر البريد</a></div>`);
   });
 
   /* ---------------- initial state from the URL ---------------- */

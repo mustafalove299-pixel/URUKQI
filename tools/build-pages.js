@@ -32,6 +32,31 @@ const idx = R.index(catalog);
 const { esc } = R;
 
 const WA = `https://wa.me/${catalog.contact.whatsapp}`;
+
+// Social preview (1200x630) and browser icons, shared by every page.
+const OG_IMAGE = "assets/brand/og-urukqi.jpg";
+const OG_IMAGE_ALT = "URUKQI — مهما كان نشاطك، نبني النظام الذي يناسب طريقة عملك.";
+
+function iconLinks(base) {
+  return `<link rel="icon" href="${base}favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="${base}assets/brand/favicon-32.png">
+  <link rel="apple-touch-icon" href="${base}assets/brand/apple-touch-icon.png">`;
+}
+
+function socialMeta(title, description) {
+  if (!SITE_URL) return "";
+  return [
+    `  <meta property="og:image" content="${SITE_URL}${OG_IMAGE}">`,
+    '  <meta property="og:image:type" content="image/jpeg">',
+    '  <meta property="og:image:width" content="1200">',
+    '  <meta property="og:image:height" content="630">',
+    `  <meta property="og:image:alt" content="${esc(OG_IMAGE_ALT)}">`,
+    '  <meta name="twitter:card" content="summary_large_image">',
+    `  <meta name="twitter:title" content="${esc(title)}">`,
+    `  <meta name="twitter:description" content="${esc(description)}">`,
+    `  <meta name="twitter:image" content="${SITE_URL}${OG_IMAGE}">`
+  ].join("\n");
+}
 const pageSectors = catalog.sectors.filter(s => s.page);
 
 /* ---------------- shared chrome ---------------- */
@@ -188,7 +213,8 @@ ${canonical ? `  <link rel="canonical" href="${canonical}">\n` : ""}  <meta prop
   <meta property="og:title" content="${esc(title)}">
   <meta property="og:description" content="${esc(description)}">
 ${canonical ? `  <meta property="og:url" content="${canonical}">\n` : ""}
-  <link rel="icon" href="data:,">
+${socialMeta(title, description)}
+  ${iconLinks(base)}
   <link rel="stylesheet" href="${base}style.css">
   <link rel="stylesheet" href="${base}mission15.css">
   <link rel="stylesheet" href="${base}catalog.css">${(styles || []).map(css => `\n  <link rel="stylesheet" href="${base}${css}">`).join("")}${crumbs}
@@ -511,8 +537,7 @@ ${finalCta(base, { need: "automation" }, "أخبرنا بالعمل الذي ي�
     title: "الأتمتة والذكاء الاصطناعي — أتمتة WhatsApp وخدمة العملاء والتقارير | URUKQI",
     description: "حلول الأتمتة والذكاء الاصطناعي من URUKQI: أتمتة WhatsApp وخدمة العملاء، متابعة العملاء المحتملين، الفواتير والتذكيرات والتنبيهات، ربط الأنظمة، ومساعدات ذكية تجيب من معلومات نشاطك. مع باقات الأتمتة.",
     breadcrumb: [{ name: "الرئيسية", path: "" }, { name: "الحلول", path: "solutions/" }, { name: "الأتمتة والذكاء الاصطناعي", path: "automation/" }],
-    body,
-    styles: ["trade.css"]
+    body
   });
 }
 
@@ -541,12 +566,16 @@ ${finalCta(base, { sector: "retail" }, "تحتاج نظامًا مختلفًا �
 
 /* ---------------- index.html generated regions ---------------- */
 
-function homeRegions() {
+function homeRegions(html) {
   const base = "";
+  const meta = name => ((html.match(new RegExp(`<meta property="og:${name}" content="([^"]*)"`)) || [])[1] || "");
+  const unesc = v => v.replace(/&quot;/g, '"').replace(/&amp;/g, "&");
   const automation = catalog.services.find(s => s.slug === "automation");
   return {
     "canonical": [
       SITE_URL ? `  <link rel="canonical" href="${SITE_URL}">\n  <meta property="og:url" content="${SITE_URL}">` : "",
+      socialMeta(unesc(meta("title")), unesc(meta("description"))),
+      `  ${iconLinks(base)}`,
       `  <script type="application/ld+json">${JSON.stringify(Object.assign({ "@context": "https://schema.org", "@type": "Organization", name: "URUKQI" },
         SITE_URL ? { url: SITE_URL } : {},
         { email: catalog.contact.email, telephone: "+" + catalog.contact.whatsapp, areaServed: "IQ",
@@ -606,7 +635,7 @@ function main() {
 
   const indexFile = path.join(ROOT, "index.html");
   const html = fs.readFileSync(indexFile, "utf8");
-  fs.writeFileSync(indexFile, injectRegions(html, homeRegions()), "utf8");
+  fs.writeFileSync(indexFile, injectRegions(html, homeRegions(html)), "utf8");
   written.push("index.html (generated regions)");
 
   written.push(write("sectors/index.html", sectorsIndex()));

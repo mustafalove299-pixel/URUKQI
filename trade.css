@@ -662,6 +662,8 @@
     padding: 22px 20px;
   }
   .hero-trade-promo-body { display: contents; }
+  /* the desktop divider would escape the card here (display: contents) and draw a line down the hero edge */
+  .hero-trade-promo-body::before { display: none; }
   .hero-trade-promo-badge { order: 1; }
   .hero-trade-promo-logo { width: 104px; order: 2; }
   .hero-trade-promo-title { order: 3; }

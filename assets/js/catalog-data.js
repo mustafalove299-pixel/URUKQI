@@ -26,10 +26,8 @@
     { id: "automation", name: "الأتمتة والذكاء الاصطناعي", en: "AUTOMATION & AI" }
   ];
 
-  // Actual URUKQI products. Status text must stay truthful and evidence-based:
-  //   Smart Customer Service System V1 — field-demo ready, NOT production-enabled
-  //     (ACCEPTANCE_RESULTS.md 2026-09-15; production workflow inactive per 2026-09-17 handoff).
-  //   URUKQI Trade — under development, prices announced at launch.
+  // Actual URUKQI products. Status text must stay truthful: only change a status
+  // when the product state has really changed (demo → live, development → launch).
   const products = [
     {
       id: "smart-customer-service",
