@@ -1,0 +1,96 @@
+/* URUKQI Phase 1 — shared visual foundation. Loaded after legacy styles. */
+:root {
+  --ink-950: #030812;
+  --ink-900: #071321;
+  --ink-800: #0a1c2d;
+  --surface-glass: rgba(8, 22, 37, .76);
+  --surface-raised: rgba(13, 31, 49, .86);
+  --line-cool: rgba(126, 193, 244, .18);
+  --gold-300: #f1cf8d;
+  --gold-400: #d6a84f;
+  --blue-300: #8bd4ff;
+  --shadow-cinematic: 0 24px 70px rgba(0, 0, 0, .38);
+  --ease-luxury: cubic-bezier(.2, .8, .2, 1);
+  --space-1: .5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.25rem;
+  --space-5: 3.5rem;
+}
+
+body {
+  background-color: var(--ink-950);
+  background-image:
+    radial-gradient(850px circle at 80% -10%, rgba(32, 117, 181, .22), transparent 55%),
+    radial-gradient(600px circle at 12% 35%, rgba(214, 168, 79, .07), transparent 58%),
+    linear-gradient(180deg, #06111e 0%, var(--ink-950) 42%, #05101b 100%);
+}
+
+body::before { opacity: .22; background-size: 86px 86px; }
+
+::selection { background: rgba(214, 168, 79, .35); color: #fffdf7; }
+
+:focus-visible {
+  outline: 3px solid var(--blue-300);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.header {
+  height: 84px;
+  border-bottom-color: rgba(137, 196, 241, .12);
+  background: linear-gradient(180deg, rgba(4, 13, 24, .90), rgba(4, 13, 24, .64));
+  box-shadow: 0 1px 0 rgba(255,255,255,.04), 0 16px 42px rgba(0,0,0,.13);
+}
+
+.header.scrolled { background: rgba(3, 11, 20, .93); box-shadow: 0 14px 36px rgba(0,0,0,.28); }
+.header-inner { gap: 20px; }
+.brand { gap: 11px; }
+.brand-mark {
+  position: relative; width: 30px; height: 38px; transform: none; border: 0; font-size: 0;
+  background: linear-gradient(90deg, var(--gold-300) 0 18%, transparent 18% 33%, var(--gold-400) 33% 55%, transparent 55% 70%, var(--gold-300) 70% 100%);
+  clip-path: polygon(0 15%, 20% 15%, 20% 0, 37% 0, 37% 45%, 63% 45%, 63% 0, 80% 0, 80% 15%, 100% 15%, 100% 100%, 0 100%);
+  filter: drop-shadow(0 0 9px rgba(214,168,79,.32));
+}
+.brand-name { font-size: 20px; letter-spacing: .22em; color: #fffdf8; }
+.nav { gap: clamp(14px, 2vw, 30px); color: #c2ced9; font-size: 14px; }
+.nav > a, .nav-trigger { transition: color .2s var(--ease-luxury); }
+.nav > a:hover, .nav-trigger:hover, .nav-group.open .nav-trigger { color: var(--gold-300); }
+.nav-drop {
+  border-color: rgba(139, 212, 255, .18);
+  background: linear-gradient(145deg, rgba(8, 27, 45, .98), rgba(4, 13, 24, .98));
+  box-shadow: var(--shadow-cinematic);
+}
+.header-cta, .btn-primary {
+  border-color: rgba(255, 226, 164, .62);
+  color: #1e1608;
+  background: linear-gradient(135deg, #f4d599, var(--gold-400));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 10px 28px rgba(214,168,79,.16);
+}
+.header-cta:hover, .btn-primary:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 15px 30px rgba(214,168,79,.26); }
+.btn-secondary { border-color: rgba(139,212,255,.28); background: rgba(7, 26, 45, .6); }
+.btn-secondary:hover { border-color: var(--blue-300); background: rgba(20, 58, 88, .7); }
+.mobile-nav { border-color: var(--line-cool); background: rgba(4, 14, 25, .98); }
+
+.section-kicker { color: var(--blue-300); letter-spacing: .14em; }
+.section-heading h2, .page-hero h1 { letter-spacing: -.025em; }
+.category-card, .solution-card, .product-card, .sector-tile, .problem-pick {
+  border-color: var(--line-cool);
+  background: linear-gradient(145deg, rgba(15, 38, 59, .76), rgba(6, 19, 34, .82));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 14px 35px rgba(0,0,0,.14);
+}
+.category-card:hover, .solution-card:hover, .product-card:hover, .sector-tile:hover, .problem-pick:hover {
+  border-color: rgba(214,168,79,.46);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 20px 42px rgba(0,0,0,.24);
+}
+
+@media (max-width: 760px) {
+  .header { height: 72px; }
+  .brand-name { font-size: 17px; }
+  .header-cta { display: none; }
+  .mobile-menu { border-color: var(--line-cool); background: rgba(10, 31, 50, .72); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}

@@ -217,7 +217,8 @@ ${socialMeta(title, description)}
   ${iconLinks(base)}
   <link rel="stylesheet" href="${base}style.css">
   <link rel="stylesheet" href="${base}mission15.css">
-  <link rel="stylesheet" href="${base}catalog.css">${(styles || []).map(css => `\n  <link rel="stylesheet" href="${base}${css}">`).join("")}${crumbs}
+  <link rel="stylesheet" href="${base}catalog.css">
+  <link rel="stylesheet" href="${base}assets/css/foundation.css">${(styles || []).map(css => `\n  <link rel="stylesheet" href="${base}${css}">`).join("")}${crumbs}
 </head>
 
 <body class="subpage">

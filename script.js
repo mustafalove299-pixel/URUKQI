@@ -8,14 +8,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { passive: true });
 
   if (mobileMenu && mobileNav) {
+    const closeMobileNav = () => {
+      mobileNav.classList.remove("open");
+      mobileMenu.setAttribute("aria-expanded", "false");
+    };
     mobileMenu.addEventListener("click", () => {
       const isOpen = mobileNav.classList.toggle("open");
       mobileMenu.setAttribute("aria-expanded", String(isOpen));
     });
     mobileNav.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
-      mobileNav.classList.remove("open");
-      mobileMenu.setAttribute("aria-expanded", "false");
+      closeMobileNav();
     }));
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && mobileNav.classList.contains("open")) {
+        closeMobileNav();
+        mobileMenu.focus();
+      }
+    });
   }
 
   // Desktop dropdowns (الحلول / القطاعات): open on hover via CSS, and on click/keyboard here.
@@ -46,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!event.target.closest(".nav-group")) navGroups.forEach(closeGroup);
   });
 
-  const revealElements = document.querySelectorAll(".problem-card, .solution-card, .industry, .process-card, .plan-card, .comparison-side, .provide-grid article, .why-grid article, .workflow-track > div, .category-card");
+  const revealElements = document.querySelectorAll(".problem-card, .solution-card, .industry, .process-card, .plan-card, .comparison-side, .provide-grid article, .why-grid article, .workflow-track > div, .category-card, .phase-one-card");
   revealElements.forEach(el => el.classList.add("reveal"));
 
   if ("IntersectionObserver" in window) {
