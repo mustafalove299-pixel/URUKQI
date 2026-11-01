@@ -76,7 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const target = document.querySelector(id);
       if (!target) return;
       event.preventDefault();
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
     });
   });
 });

@@ -33,13 +33,13 @@
     return { solutions, sectors, problems, categories };
   }
 
-  // Link into the request form on the home page with the selection pre-filled.
+  // Link into the request form on the contact page with the selection pre-filled.
   function requestHref(base, params) {
     const qs = Object.keys(params || {})
       .filter(key => params[key])
       .map(key => `${key}=${encodeURIComponent(params[key])}`)
       .join("&");
-    return `${base}index.html${qs ? "?" + qs : ""}#request`;
+    return `${base}contact/${qs ? "?" + qs : ""}#request`;
   }
 
   function sectorHref(base, sector) {
@@ -80,6 +80,7 @@
   function sectorTile(sector, n, base) {
     const request = sector.page ? "" : ` data-request="${esc(JSON.stringify({ sector: sector.slug }))}"`;
     return `<a class="sector-tile${sector.page ? "" : " is-custom"}" href="${sectorHref(base, sector)}" data-sector="${esc(sector.slug)}"${request}>
+  <img src="${base}assets/art/sector-${esc(sector.slug)}.webp" width="800" height="450" alt="" loading="lazy" decoding="async">
   <span class="sector-num">${pad(n)}</span>
   <strong>${esc(sector.name)}</strong>
   <small>${esc(sector.short)}</small>

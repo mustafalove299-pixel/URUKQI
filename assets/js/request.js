@@ -27,7 +27,7 @@
   const openedAt = Date.now();
   const submitBtn = form.querySelector('button[type="submit"]');
   const submitLabel = submitBtn ? submitBtn.innerHTML : "";
-  const ENDPOINT = "api/lead";
+  const ENDPOINT = form.getAttribute("data-endpoint") || "api/lead";
 
   const toLatinDigits = s => String(s || "").replace(/[٠-٩]/g, d => String(d.charCodeAt(0) - 0x0660))
     .replace(/[۰-۹]/g, d => String(d.charCodeAt(0) - 0x06F0));
@@ -55,7 +55,10 @@
     }
     if (problem) {
       chips.push(["المشكلة", problem.title]);
-      if (problem.solutions.length && !fields.problem.value.trim()) fields.problem.value = problem.title + ". ";
+      if (problem.solutions.length && !fields.problem.value.trim()) {
+        fields.problem.value = problem.title + ". ";
+        fields.problem.dispatchEvent(new Event("input"));
+      }
     }
     const needBox = params.need && form.querySelector(`input[data-need="${CSS.escape(params.need)}"]`);
     if (needBox) {

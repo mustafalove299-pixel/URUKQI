@@ -1,0 +1,117 @@
+<form class="request-form" id="requestForm" data-endpoint="{{base}}api/lead" novalidate>
+
+            <div class="request-head">
+              <span class="request-chip">طلب مشروع</span>
+              <h2>أخبرنا عن مشروعك</h2>
+              <p>الحقول المعلّمة بـ <em aria-hidden="true">*</em> مطلوبة، والباقي يساعدنا على فهم عملك بشكل أفضل.</p>
+            </div>
+
+            <div class="request-selection" id="requestSelection" hidden></div>
+
+            <!-- spam trap: real visitors never see or fill this field -->
+            <div class="form-trap" aria-hidden="true"><label for="rq-website">اترك هذا الحقل فارغًا</label><input id="rq-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+
+            <div class="form-grid">
+
+              <div class="form-field">
+                <label for="rq-name">الاسم <em aria-hidden="true">*</em></label>
+                <input id="rq-name" name="name" type="text" autocomplete="name" maxlength="80" required aria-describedby="rq-name-error" placeholder="اسمك الكامل">
+                <small class="field-error" id="rq-name-error" hidden></small>
+              </div>
+
+              <div class="form-field">
+                <label for="rq-company">اسم المشروع / الشركة</label>
+                <input id="rq-company" name="company" type="text" autocomplete="organization" maxlength="100" placeholder="اسم نشاطك أو شركتك">
+              </div>
+
+              <div class="form-field">
+                <label for="rq-phone">رقم الهاتف / WhatsApp <em aria-hidden="true">*</em></label>
+                <input id="rq-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" maxlength="20" placeholder="07XX XXX XXXX" required aria-describedby="rq-phone-error">
+                <small class="field-error" id="rq-phone-error" hidden></small>
+              </div>
+
+              <div class="form-field">
+                <label for="rq-sector">نوع النشاط <em aria-hidden="true">*</em></label>
+                <select id="rq-sector" name="sector" required aria-describedby="rq-sector-error">
+                {{sectorOptions}}
+                </select>
+                <small class="field-error" id="rq-sector-error" hidden></small>
+              </div>
+
+              <div class="form-field is-wide">
+                <label for="rq-solution">الحل المطلوب <small>(إن وُجد)</small></label>
+                <input id="rq-solution" name="solution" type="text" maxlength="140" placeholder="مثال: نظام مخزون وديون، تطبيق مندوب، موقع حجوزات…">
+              </div>
+
+              <div class="form-field is-wide">
+                <label for="rq-problem">المشكلة التي تريد حلها <em aria-hidden="true">*</em></label>
+                <textarea id="rq-problem" name="problem" rows="3" maxlength="600" required aria-describedby="rq-problem-error rq-problem-count" data-count="rq-problem-count" placeholder="اكتب بكلماتك ما الذي تريد تنظيمه أو تسهيله…"></textarea>
+                <small class="field-count" id="rq-problem-count" dir="ltr">0/600</small>
+                <small class="field-error" id="rq-problem-error" hidden></small>
+              </div>
+
+              <div class="form-field is-wide">
+                <label for="rq-current">كيف تدير هذه العملية حاليًا؟</label>
+                <textarea id="rq-current" name="current" rows="2" maxlength="400" placeholder="دفاتر، Excel، WhatsApp، برنامج آخر…"></textarea>
+              </div>
+
+              <div class="form-field">
+                <label for="rq-users">عدد المستخدمين / الموظفين</label>
+                <select id="rq-users" name="users">
+                  <option value="">اختر</option>
+                  <option value="1">1</option>
+                  <option value="2-5">2 – 5</option>
+                  <option value="6-20">6 – 20</option>
+                  <option value="21-50">21 – 50</option>
+                  <option value="50+">أكثر من 50</option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label for="rq-branches">عدد الفروع</label>
+                <select id="rq-branches" name="branches">
+                  <option value="">اختر</option>
+                  <option value="1">فرع واحد</option>
+                  <option value="2-3">2 – 3</option>
+                  <option value="4-10">4 – 10</option>
+                  <option value="10+">أكثر من 10</option>
+                </select>
+              </div>
+
+              <div class="form-field is-wide">
+                <label for="rq-existing">هل لديك نظام حالي؟</label>
+                <select id="rq-existing" name="existing">
+                  <option value="">اختر</option>
+                  <option value="none">لا، أعمل بالدفاتر أو يدويًا</option>
+                  <option value="excel">أستخدم Excel</option>
+                  <option value="system">نعم، لدي برنامج أو نظام</option>
+                  <option value="unsure">غير متأكد</option>
+                </select>
+              </div>
+
+              <fieldset class="form-field is-wide needs-field">
+                <legend>ماذا تحتاج؟ <small>(اختر ما ينطبق)</small></legend>
+                <label><input type="checkbox" name="needs" value="Web" data-need="web"> نظام أو موقع Web</label>
+                <label><input type="checkbox" name="needs" value="Windows / Desktop" data-need="desktop"> برنامج Windows / Desktop</label>
+                <label><input type="checkbox" name="needs" value="تطبيق Mobile" data-need="mobile"> تطبيق Mobile</label>
+                <label><input type="checkbox" name="needs" value="ربط WhatsApp" data-need="whatsapp"> ربط WhatsApp</label>
+                <label><input type="checkbox" name="needs" value="أتمتة" data-need="automation"> أتمتة Automation</label>
+              </fieldset>
+
+              <div class="form-field is-wide">
+                <label for="rq-details">تفاصيل إضافية</label>
+                <textarea id="rq-details" name="details" rows="3" maxlength="600" aria-describedby="rq-details-count" data-count="rq-details-count"></textarea>
+                <small class="field-count" id="rq-details-count" dir="ltr">0/600</small>
+              </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary full-btn">أرسل طلبي {{sendIcon}}</button>
+
+            <p class="form-hint">{{lockIcon}} <span>يصلنا طلبك مباشرة عبر الموقع، وبعد تأكيد الاستلام يمكنك متابعة المحادثة معنا عبر WhatsApp. نستخدم بياناتك للرد على طلبك فقط — راجع <a href="{{base}}privacy.html">سياسة الخصوصية</a>.</span></p>
+
+            <div class="request-status" id="requestStatus" role="status" tabindex="-1" hidden></div>
+
+            <p class="request-attach">لديك لقطة شاشة أو ملف Excel أو نموذج فاتورة أو مستند؟ أرسله داخل محادثة WhatsApp بعد إرسال الطلب — هذا النموذج لا يرفع الملفات.</p>
+
+          </form>
