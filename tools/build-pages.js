@@ -947,6 +947,31 @@ ${closingBand(base, { sector: "retail" }, "تحتاج نظامًا مختلفً�
   });
 }
 
+/* ---------------- 404 page ---------------- */
+
+// Cloudflare Pages serves this at whatever URL was missing, so links must be root-absolute.
+function notFoundPage() {
+  const base = "/";
+  const body = cineHero(base, {
+    scene: "hero-palace",
+    alt: "",
+    eyebrow: "404",
+    titleHtml: `هذه الصفحة <span class="gold">غير موجودة.</span>`,
+    lead: "ربما تغيّر الرابط أو لم يعد متاحًا. يمكنك العودة إلى الرئيسية أو تصفح حلولنا.",
+    actions: `<a href="${base}" class="btn btn-primary">العودة إلى الرئيسية ${ARROW}</a>
+            <a href="${base}solutions/" class="btn btn-secondary">تصفح الحلول</a>`
+  });
+  return page({
+    base,
+    urlPath: "404.html",
+    title: "الصفحة غير موجودة | URUKQI",
+    description: "الصفحة المطلوبة غير موجودة على موقع URUKQI.",
+    body
+  }).replace(/\n\s*<link rel="canonical"[^>]*>/, "")
+    .replace(/\n\s*<meta property="og:url"[^>]*>/, "")
+    .replace("</title>", '</title>\n  <meta name="robots" content="noindex">');
+}
+
 /* ---------------- legal pages (content stays in the file, chrome is shared) ---------------- */
 
 function legalPage(file) {
@@ -1052,6 +1077,7 @@ function main() {
   written.push(write("automation/index.html", automationPage()));
   written.push(write("trade/index.html", tradePage()));
   ["privacy.html", "terms.html", "support.html"].forEach(f => written.push(write(f, legalPage(f))));
+  written.push(write("404.html", notFoundPage()));
 
   const sitemapFile = path.join(ROOT, "sitemap.xml");
   if (!SITE_URL) {
