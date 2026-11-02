@@ -438,7 +438,8 @@ h1, h2, h3, h4 { font-family: inherit; letter-spacing: 0; }
 .faq-grid summary { min-height: 50px; padding: 12px 16px; cursor: pointer; color: #fff; font-weight: 700; line-height: 1.55; }
 .faq-grid details p { margin: 0; padding: 0 16px 14px; color: var(--muted); font-size: 15px; }
 .commitments-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 18px 0 0; }
-.commitments-list span { padding: 3px 12px; border: 1px solid var(--line-strong); border-radius: 99px; color: #dde4ef; font-size: 14px; }
+.commitments-list span { display: inline-flex; align-items: baseline; gap: 6px; max-width: 100%; padding: 3px 12px; border: 1px solid var(--line-strong); border-radius: 99px; color: #dde4ef; font-size: 14px; }
+.commitments-list span::before { position: static; flex: none; }
 .duration-note { margin-top: 14px; padding: 12px 16px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--panel); color: #dde4ef; font-size: 14.5px; }
 .duration-note span { color: var(--soft); font-size: 13.5px; }
 
