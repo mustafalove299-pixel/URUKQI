@@ -1,0 +1,369 @@
+{
+ "_note": "Crop settings per product. photo = Unsplash photo id(s) in the source folder. focus = crop centre (0-1). zoom = share of the largest 4:5 crop (1 = widest).",
+ "products": {
+  "m-washed-shirt": {
+   "photo": [
+    "e8sbQNYEwX8"
+   ],
+   "focus": [
+    0.5,
+    0.55
+   ],
+   "zoom": 1
+  },
+  "m-essential-tee": {
+   "photo": [
+    "8ACmRoleM24"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "zoom": 1
+  },
+  "m-denim-jacket": {
+   "photo": [
+    "XovTIAjyx2E"
+   ],
+   "focus": [
+    0.56,
+    0.5
+   ],
+   "zoom": 1
+  },
+  "m-camel-coat": {
+   "photo": [
+    "C96NzUlW9VU"
+   ],
+   "focus": [
+    0.48,
+    0.58
+   ],
+   "zoom": 1
+  },
+  "m-wide-trousers": {
+   "photo": [
+    "IXt9gyB5Zfk"
+   ],
+   "focus": [
+    0.5,
+    0.62
+   ],
+   "zoom": 0.8
+  },
+  "m-pocket-tee": {
+   "photo": [
+    "DngSzCPBx6s"
+   ],
+   "focus": [
+    0.52,
+    0.68
+   ],
+   "zoom": 0.55
+  },
+  "w-knit-set": {
+   "photo": [
+    "jJEb8_zzr6o"
+   ],
+   "focus": [
+    0.58,
+    0.55
+   ],
+   "zoom": 1
+  },
+  "w-trench-coat": {
+   "photo": [
+    "O4uZbwuta8w"
+   ],
+   "focus": [
+    0.5,
+    0.6
+   ],
+   "zoom": 1
+  },
+  "w-embroidered-abaya": {
+   "photo": [
+    "MzImhIYa3-I"
+   ],
+   "focus": [
+    0.5,
+    0.4
+   ],
+   "zoom": 1
+  },
+  "w-wool-coat": {
+   "photo": [
+    "2eC_-0yRrGU"
+   ],
+   "focus": [
+    0.5,
+    0.72
+   ],
+   "zoom": 1
+  },
+  "s-monk-strap": {
+   "photo": [
+    "erHlzWCN6zQ"
+   ],
+   "focus": [
+    0.47,
+    0.52
+   ],
+   "zoom": 0.6
+  },
+  "s-suede-boots": {
+   "photo": [
+    "wH63OABrR4E"
+   ],
+   "focus": [
+    0.5,
+    0.45
+   ],
+   "zoom": 1
+  },
+  "s-hiking-shoes": {
+   "photo": [
+    "BSL837tTPAw"
+   ],
+   "focus": [
+    0.48,
+    0.58
+   ],
+   "zoom": 0.72
+  },
+  "s-block-heels": {
+   "photo": [
+    "gHO13CX3V84"
+   ],
+   "focus": [
+    0.82,
+    0.6
+   ],
+   "zoom": 0.78
+  },
+  "s-buckle-slides": {
+   "photo": [
+    "LnR6-7P2YNk"
+   ],
+   "focus": [
+    0.27,
+    0.6
+   ],
+   "zoom": 1
+  },
+  "b-leather-satchel": {
+   "photo": [
+    "zxPo13geJ5U"
+   ],
+   "focus": [
+    0.5,
+    0.55
+   ],
+   "zoom": 1
+  },
+  "b-croc-mini": {
+   "photo": [
+    "pSVYyO-XlJk"
+   ],
+   "focus": [
+    0.55,
+    0.58
+   ],
+   "zoom": 1
+  },
+  "b-leather-backpack": {
+   "photo": [
+    "OFHkPCkhYEY",
+    "3o-X8WJOP5E"
+   ],
+   "focus": [
+    0.5,
+    0.6
+   ],
+   "zoom": 1
+  },
+  "b-black-tote": {
+   "photo": [
+    "83hUihWqdNk"
+   ],
+   "focus": [
+    0.5,
+    0.66
+   ],
+   "zoom": 1
+  },
+  "b-folio-clutch": {
+   "photo": [
+    "P1jQzyvqfns"
+   ],
+   "focus": [
+    0.55,
+    0.52
+   ],
+   "zoom": 1
+  },
+  "b-crossbody": {
+   "photo": [
+    "TQ8RWNM0eBY"
+   ],
+   "focus": [
+    0.66,
+    0.55
+   ],
+   "zoom": 1
+  },
+  "a-gold-pendant": {
+   "photo": [
+    "Q3dMusCuYKk"
+   ],
+   "focus": [
+    0.3,
+    0.6
+   ],
+   "zoom": 1
+  },
+  "a-gold-bangles": {
+   "photo": [
+    "aldDZePniqg"
+   ],
+   "focus": [
+    0.6,
+    0.45
+   ],
+   "zoom": 1
+  },
+  "a-metal-sunglasses": {
+   "photo": [
+    "w1ELNajqfwk"
+   ],
+   "focus": [
+    0.62,
+    0.45
+   ],
+   "zoom": 1
+  },
+  "a-round-sunglasses": {
+   "photo": [
+    "DQcu4QOdj5c"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "zoom": 1
+  },
+  "a-card-holder": {
+   "photo": [
+    "chB-ff0cgCU"
+   ],
+   "focus": [
+    0.5,
+    0.56
+   ],
+   "zoom": 1
+  },
+  "a-leather-belt": {
+   "photo": [
+    "KAx7H0jxo28"
+   ],
+   "focus": [
+    0.72,
+    0.55
+   ],
+   "zoom": 1
+  },
+  "a-minimal-watch": {
+   "photo": [
+    "wtqe5nd5MYk"
+   ],
+   "focus": [
+    0.74,
+    0.72
+   ],
+   "zoom": 0.42
+  },
+  "l-eau-de-parfum": {
+   "photo": [
+    "752a7fdivow"
+   ],
+   "focus": [
+    0.78,
+    0.6
+   ],
+   "zoom": 1
+  },
+  "l-ceramic-candle": {
+   "photo": [
+    "Pg2jm-PMVWs"
+   ],
+   "focus": [
+    0.5,
+    0.66
+   ],
+   "zoom": 0.8
+  },
+  "l-gold-handle-mug": {
+   "photo": [
+    "2dDJdOlA3CY"
+   ],
+   "focus": [
+    0.5,
+    0.62
+   ],
+   "zoom": 1
+  },
+  "l-handmade-cup": {
+   "photo": [
+    "VEt0dKCRbWs"
+   ],
+   "focus": [
+    0.45,
+    0.6
+   ],
+   "zoom": 0.7
+  },
+  "l-white-vase": {
+   "photo": [
+    "a0rE64YJDA4"
+   ],
+   "focus": [
+    0.38,
+    0.55
+   ],
+   "zoom": 1
+  },
+  "l-lavender-pitcher": {
+   "photo": [
+    "zxYeCXxbgWc"
+   ],
+   "focus": [
+    0.42,
+    0.55
+   ],
+   "zoom": 1
+  }
+ },
+ "banners": {
+  "hero": {
+   "photo": "pkOSF1frs1g",
+   "focus": [
+    0.5,
+    0.55
+   ]
+  },
+  "atelier": {
+   "photo": "Apw4z0D9xVE",
+   "focus": [
+    0.55,
+    0.55
+   ]
+  },
+  "rack": {
+   "photo": "mwa_nzFpnJw",
+   "focus": [
+    0.5,
+    0.7
+   ]
+  }
+ }
+}

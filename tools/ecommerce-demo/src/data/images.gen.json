@@ -1,0 +1,607 @@
+{
+ "products": {
+  "m-washed-shirt": [
+   {
+    "src": "p/m-washed-shirt-1",
+    "widths": [
+     480,
+     960,
+     1066
+    ],
+    "color": "#080808"
+   }
+  ],
+  "m-essential-tee": [
+   {
+    "src": "p/m-essential-tee-1",
+    "widths": [
+     480,
+     960,
+     1066
+    ],
+    "color": "#d8d8d8"
+   }
+  ],
+  "m-denim-jacket": [
+   {
+    "src": "p/m-denim-jacket-1",
+    "widths": [
+     480,
+     960,
+     1065
+    ],
+    "color": "#281808"
+   }
+  ],
+  "m-camel-coat": [
+   {
+    "src": "p/m-camel-coat-1",
+    "widths": [
+     480,
+     960,
+     1400
+    ],
+    "color": "#f8f8f8"
+   },
+   {
+    "src": "p/m-camel-coat-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#f8f8f8"
+   }
+  ],
+  "m-wide-trousers": [
+   {
+    "src": "p/m-wide-trousers-1",
+    "widths": [
+     480,
+     960,
+     1400
+    ],
+    "color": "#483828"
+   },
+   {
+    "src": "p/m-wide-trousers-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#483828"
+   },
+   {
+    "src": "p/m-wide-trousers-3",
+    "widths": [
+     480,
+     800
+    ],
+    "color": "#483828"
+   }
+  ],
+  "m-pocket-tee": [
+   {
+    "src": "p/m-pocket-tee-1",
+    "widths": [
+     480,
+     960,
+     1100
+    ],
+    "color": "#e8e8e8"
+   },
+   {
+    "src": "p/m-pocket-tee-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#e8e8e8"
+   }
+  ],
+  "w-knit-set": [
+   {
+    "src": "p/w-knit-set-1",
+    "widths": [
+     480,
+     960,
+     1400
+    ],
+    "color": "#b8b8b8"
+   },
+   {
+    "src": "p/w-knit-set-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#b8b8b8"
+   }
+  ],
+  "w-trench-coat": [
+   {
+    "src": "p/w-trench-coat-1",
+    "widths": [
+     480,
+     960,
+     1400
+    ],
+    "color": "#080808"
+   },
+   {
+    "src": "p/w-trench-coat-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#080808"
+   }
+  ],
+  "w-embroidered-abaya": [
+   {
+    "src": "p/w-embroidered-abaya-1",
+    "widths": [
+     480,
+     960,
+     1400
+    ],
+    "color": "#181818"
+   },
+   {
+    "src": "p/w-embroidered-abaya-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#181818"
+   }
+  ],
+  "w-wool-coat": [
+   {
+    "src": "p/w-wool-coat-1",
+    "widths": [
+     480,
+     960,
+     1400
+    ],
+    "color": "#181818"
+   },
+   {
+    "src": "p/w-wool-coat-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#181818"
+   }
+  ],
+  "s-monk-strap": [
+   {
+    "src": "p/s-monk-strap-1",
+    "widths": [
+     480,
+     641
+    ],
+    "color": "#281818"
+   },
+   {
+    "src": "p/s-monk-strap-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#281818"
+   }
+  ],
+  "s-suede-boots": [
+   {
+    "src": "p/s-suede-boots-1",
+    "widths": [
+     480,
+     960,
+     1400
+    ],
+    "color": "#182828"
+   },
+   {
+    "src": "p/s-suede-boots-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#182828"
+   }
+  ],
+  "s-hiking-shoes": [
+   {
+    "src": "p/s-hiking-shoes-1",
+    "widths": [
+     480,
+     768
+    ],
+    "color": "#382818"
+   },
+   {
+    "src": "p/s-hiking-shoes-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#382818"
+   }
+  ],
+  "s-block-heels": [
+   {
+    "src": "p/s-block-heels-1",
+    "widths": [
+     480,
+     832
+    ],
+    "color": "#e8e8e8"
+   },
+   {
+    "src": "p/s-block-heels-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#e8e8e8"
+   }
+  ],
+  "s-buckle-slides": [
+   {
+    "src": "p/s-buckle-slides-1",
+    "widths": [
+     480,
+     960,
+     1105
+    ],
+    "color": "#989888"
+   }
+  ],
+  "b-leather-satchel": [
+   {
+    "src": "p/b-leather-satchel-1",
+    "widths": [
+     480,
+     960,
+     1400
+    ],
+    "color": "#f8f8f8"
+   },
+   {
+    "src": "p/b-leather-satchel-2",
+    "widths": [
+     480,
+     800
+    ],
+    "color": "#f8f8f8"
+   }
+  ],
+  "b-croc-mini": [
+   {
+    "src": "p/b-croc-mini-1",
+    "widths": [
+     480,
+     960,
+     1400
+    ],
+    "color": "#e8e8e8"
+   },
+   {
+    "src": "p/b-croc-mini-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#e8e8e8"
+   }
+  ],
+  "b-leather-backpack": [
+   {
+    "src": "p/b-leather-backpack-1",
+    "widths": [
+     480,
+     960,
+     1400
+    ],
+    "color": "#e8e8e8"
+   },
+   {
+    "src": "p/b-leather-backpack-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#f8f8f8"
+   },
+   {
+    "src": "p/b-leather-backpack-3",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#e8e8e8"
+   }
+  ],
+  "b-black-tote": [
+   {
+    "src": "p/b-black-tote-1",
+    "widths": [
+     480,
+     960,
+     1400
+    ],
+    "color": "#c8c8c8"
+   },
+   {
+    "src": "p/b-black-tote-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#c8c8c8"
+   }
+  ],
+  "b-folio-clutch": [
+   {
+    "src": "p/b-folio-clutch-1",
+    "widths": [
+     480,
+     960,
+     1400
+    ],
+    "color": "#080808"
+   },
+   {
+    "src": "p/b-folio-clutch-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#080808"
+   }
+  ],
+  "b-crossbody": [
+   {
+    "src": "p/b-crossbody-1",
+    "widths": [
+     480,
+     960,
+     1066
+    ],
+    "color": "#080808"
+   }
+  ],
+  "a-gold-pendant": [
+   {
+    "src": "p/a-gold-pendant-1",
+    "widths": [
+     480,
+     960,
+     1400
+    ],
+    "color": "#a8a8a8"
+   },
+   {
+    "src": "p/a-gold-pendant-2",
+    "widths": [
+     480,
+     722
+    ],
+    "color": "#a8a8a8"
+   }
+  ],
+  "a-gold-bangles": [
+   {
+    "src": "p/a-gold-bangles-1",
+    "widths": [
+     480,
+     960,
+     1066
+    ],
+    "color": "#e8e8e8"
+   }
+  ],
+  "a-metal-sunglasses": [
+   {
+    "src": "p/a-metal-sunglasses-1",
+    "widths": [
+     480,
+     960,
+     1062
+    ],
+    "color": "#f8f8f8"
+   }
+  ],
+  "a-round-sunglasses": [
+   {
+    "src": "p/a-round-sunglasses-1",
+    "widths": [
+     480,
+     960,
+     1400
+    ],
+    "color": "#f8d8d8"
+   },
+   {
+    "src": "p/a-round-sunglasses-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#f8d8d8"
+   }
+  ],
+  "a-card-holder": [
+   {
+    "src": "p/a-card-holder-1",
+    "widths": [
+     480,
+     960,
+     1200
+    ],
+    "color": "#c8c8c8"
+   }
+  ],
+  "a-leather-belt": [
+   {
+    "src": "p/a-leather-belt-1",
+    "widths": [
+     480,
+     960,
+     1066
+    ],
+    "color": "#081828"
+   }
+  ],
+  "a-minimal-watch": [
+   {
+    "src": "p/a-minimal-watch-1",
+    "widths": [
+     480,
+     827
+    ],
+    "color": "#d8d8d8"
+   },
+   {
+    "src": "p/a-minimal-watch-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#d8d8d8"
+   }
+  ],
+  "l-eau-de-parfum": [
+   {
+    "src": "p/l-eau-de-parfum-1",
+    "widths": [
+     480,
+     960,
+     1066
+    ],
+    "color": "#484848"
+   }
+  ],
+  "l-ceramic-candle": [
+   {
+    "src": "p/l-ceramic-candle-1",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#281808"
+   },
+   {
+    "src": "p/l-ceramic-candle-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#281808"
+   }
+  ],
+  "l-gold-handle-mug": [
+   {
+    "src": "p/l-gold-handle-mug-1",
+    "widths": [
+     480,
+     960,
+     1400
+    ],
+    "color": "#282828"
+   },
+   {
+    "src": "p/l-gold-handle-mug-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#282828"
+   }
+  ],
+  "l-handmade-cup": [
+   {
+    "src": "p/l-handmade-cup-1",
+    "widths": [
+     480,
+     960,
+     1400
+    ],
+    "color": "#b8b8a8"
+   },
+   {
+    "src": "p/l-handmade-cup-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#b8b8a8"
+   },
+   {
+    "src": "p/l-handmade-cup-3",
+    "widths": [
+     480,
+     700
+    ],
+    "color": "#b8b8a8"
+   }
+  ],
+  "l-white-vase": [
+   {
+    "src": "p/l-white-vase-1",
+    "widths": [
+     480,
+     960,
+     1400
+    ],
+    "color": "#b8b8b8"
+   },
+   {
+    "src": "p/l-white-vase-2",
+    "widths": [
+     480,
+     960
+    ],
+    "color": "#b8b8b8"
+   }
+  ],
+  "l-lavender-pitcher": [
+   {
+    "src": "p/l-lavender-pitcher-1",
+    "widths": [
+     480,
+     960,
+     1066
+    ],
+    "color": "#e8e8e8"
+   }
+  ]
+ },
+ "banners": {
+  "hero": {
+   "src": "b/hero",
+   "widths": [
+    720,
+    1200
+   ],
+   "color": "#888878"
+  },
+  "atelier": {
+   "src": "b/atelier",
+   "widths": [
+    720,
+    1200
+   ],
+   "color": "#c8b8a8"
+  },
+  "rack": {
+   "src": "b/rack",
+   "widths": [
+    720,
+    1200
+   ],
+   "color": "#e8e8e8"
+  }
+ }
+}

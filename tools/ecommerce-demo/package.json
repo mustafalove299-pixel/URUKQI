@@ -1,0 +1,43 @@
+{
+  "name": "urukqi-ecommerce-demo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "NASAQ — URUKQI's interactive e-commerce showcase. Builds into /demos/ecommerce/.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc --noEmit",
+    "images": "node scripts/build-images.mjs",
+    "build": "node scripts/clean.mjs && tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@fontsource/amiri": "5.3.0",
+    "@fontsource/cormorant-garamond": "5.3.0",
+    "@fontsource/ibm-plex-sans-arabic": "5.3.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "embla-carousel-react": "8.6.0",
+    "lucide-react": "1.67.0",
+    "radix-ui": "^1.8.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-router": "7.18.5",
+    "sonner": "^2.0.8",
+    "tailwind-merge": "^3.7.0",
+    "zustand": "5.0.16"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@tailwindcss/vite": "4.3.4",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.2.1",
+    "sharp": "0.35.5",
+    "tailwindcss": "4.3.4",
+    "typescript": "5.9.3",
+    "vite": "8.3.5"
+  }
+}

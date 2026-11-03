@@ -431,6 +431,39 @@ function journeySection(base, id) {
 
 /* ---------------- sector page ---------------- */
 
+// Entry card for the interactive store demo built from tools/ecommerce-demo into demos/ecommerce/.
+function storeShowcase(base) {
+  const demo = `${base}demos/ecommerce/`;
+  return `
+    <section class="section cine-section store-showcase" aria-labelledby="store-showcase-title">
+      <div class="container">
+        <div class="showcase-card" data-reveal>
+          <figure class="showcase-media">
+            <img src="${demo}img/b/hero-720.webp" srcset="${demo}img/b/hero-720.webp 720w, ${demo}img/b/hero-1200.webp 1200w" sizes="(max-width: 860px) 100vw, 46vw" width="720" height="900" alt="الواجهة الرئيسية لمتجر الأزياء التجريبي نَسَق" loading="lazy" decoding="async">
+            <span class="showcase-tag">نموذج تفاعلي</span>
+          </figure>
+          <div class="showcase-copy">
+            <p class="eyebrow">LIVE E-COMMERCE DEMO</p>
+            <h2 id="store-showcase-title">جرّب متجرًا إلكترونيًا <span class="gold">يعمل فعلًا قبل أن تطلب متجرك.</span></h2>
+            <p>«نَسَق» متجر أزياء تجريبي بنيناه لتجربه بنفسك: تصفح 34 منتجًا، ابحث وصفِّ، أضف إلى السلة والمفضلة، وأكمل طلبًا تجريبيًا بالدفع عند الاستلام. ثم افتح لوحة الإدارة وغيّر الأسعار والمخزون وتابع الطلبات.</p>
+            <ul class="showcase-points">
+              <li>بحث وتصفية حسب القسم والسعر والمقاس واللون</li>
+              <li>سلة ومفضلة تبقيان بعد إغلاق الصفحة</li>
+              <li>لوحة إدارة للمنتجات والطلبات والخصومات</li>
+            </ul>
+            <div class="hero-actions">
+              <a href="${demo}" class="btn btn-primary">جرّب المتجر الإلكتروني ${ARROW}</a>
+              <a href="${demo}#/admin" class="btn btn-secondary">شاهد لوحة الإدارة</a>
+              <a href="${R.requestHref(base, { sector: "ecommerce", solution: "ecom-store" })}" class="btn btn-secondary">اطلب متجرًا لمشروعك</a>
+            </div>
+            <small>متجر تجريبي: المنتجات والأسعار والطلبات لأغراض العرض فقط، ولا تُرسل الطلبات إلى أي جهة.</small>
+          </div>
+        </div>
+      </div>
+    </section>
+`;
+}
+
 function sectorPage(sector) {
   const base = "../../";
   const cards = sector.solutions.map(sol => R.solutionCard(idx.solutions[sol.id],
@@ -453,7 +486,7 @@ function sectorPage(sector) {
     extra: examples + note,
     side: `<figure class="hero-emblem">${art(base, `sector-${sector.slug}`, [800], { w: 800, h: 450, eager: true })}</figure>`
   })}
-
+${sector.slug === "ecommerce" ? storeShowcase(base) : ""}
     <section class="section cine-section" id="sector-solutions">
       <div class="container">
         ${headingBlock("SOLUTIONS", `ماذا يمكن أن نبني لقطاع <span class="gold">${esc(sector.name)}</span>؟`, "اختر الحل الأقرب لعملك واضغط «أريد هذا الحل»، وسيُفتح لك نموذج الطلب واختيارك معبأ مسبقًا.")}
@@ -484,7 +517,8 @@ ${closingBand(base, { sector: sector.slug })}`;
     breadcrumb: [{ name: "الرئيسية", path: "" }, { name: "القطاعات", path: "sectors/" }, { name: sector.name, path: `sectors/${sector.slug}/` }],
     body,
     active: "sectors",
-    request: { sector: sector.slug }
+    request: { sector: sector.slug },
+    styles: sector.slug === "ecommerce" ? ["assets/css/showcase.css"] : undefined
   });
 }
 

@@ -1,0 +1,85 @@
+@import "tailwindcss";
+@import "@fontsource/ibm-plex-sans-arabic/400.css";
+@import "@fontsource/ibm-plex-sans-arabic/500.css";
+@import "@fontsource/ibm-plex-sans-arabic/600.css";
+@import "@fontsource/amiri/400.css";
+@import "@fontsource/cormorant-garamond/500.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* NASAQ retail identity: ivory, ink, warm stone and a single clay accent. */
+:root {
+  --radius: 0.375rem;
+  --background: #f6f2ec;
+  --foreground: #1d1b18;
+  --card: #fffdf9;
+  --card-foreground: #1d1b18;
+  --popover: #fffdf9;
+  --popover-foreground: #1d1b18;
+  --primary: #1d1b18;
+  --primary-foreground: #f6f2ec;
+  --secondary: #ebe4d9;
+  --secondary-foreground: #1d1b18;
+  --muted: #ece6dc;
+  --muted-foreground: #6b645b;
+  --accent: #e9e1d4;
+  --accent-foreground: #1d1b18;
+  --destructive: #a33a2c;
+  --border: #ddd4c6;
+  --input: #d3c8b8;
+  --ring: #8c5a3c;
+  --clay: #8c5a3c;
+  --clay-soft: #f0e2d6;
+  --sand: #e9e1d4;
+  --ink-2: #2b2824;
+}
+
+@theme inline {
+  --font-sans: "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-display: "Amiri", "IBM Plex Sans Arabic", serif;
+  --font-latin: "Cormorant Garamond", Georgia, serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-clay: var(--clay);
+  --color-clay-soft: var(--clay-soft);
+  --color-sand: var(--sand);
+  --color-ink-2: var(--ink-2);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 6px);
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body { @apply bg-background text-foreground font-sans antialiased; font-feature-settings: "tnum" 0; overflow-x: hidden; }
+  :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  button, [role="button"] { cursor: pointer; }
+  img { max-width: 100%; }
+}
+
+.num { font-variant-numeric: tabular-nums; }
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
