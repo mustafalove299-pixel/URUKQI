@@ -453,7 +453,7 @@ function storeShowcase(base) {
             </ul>
             <div class="hero-actions">
               <a href="${demo}" class="btn btn-primary">جرّب المتجر الإلكتروني ${ARROW}</a>
-              <a href="${demo}#/admin" class="btn btn-secondary">شاهد لوحة الإدارة</a>
+              <a href="${demo}#/admin" class="btn btn-secondary">جرّب لوحة إدارة المتجر</a>
               <a href="${R.requestHref(base, { sector: "ecommerce", solution: "ecom-store" })}" class="btn btn-secondary">اطلب متجرًا لمشروعك</a>
             </div>
             <small>متجر تجريبي: المنتجات والأسعار والطلبات لأغراض العرض فقط، ولا تُرسل الطلبات إلى أي جهة.</small>
