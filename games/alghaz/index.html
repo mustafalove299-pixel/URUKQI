@@ -1,0 +1,1138 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#060b18">
+<title>ألغاز أوروك — لعبة ألغاز عربية بمراحل لا تنتهي</title>
+<meta name="description" content="ألغاز أوروك: لعبة ألغاز وتحديات ذهنية باللغة العربية بمراحل لا تنتهي — ألغاز كلمات، ترتيب حروف، متتاليات أرقام، معادلات رموز، منطق وحساب، مع تلميحات ونجوم وعملات.">
+<link rel="icon" href="../../favicon.ico" sizes="any">
+<style>
+@font-face{font-family:"Cairo";src:url("../../assets/fonts/cairo-arabic-wght-normal.woff2") format("woff2");font-weight:200 1000;font-display:swap;unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0898-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
+@font-face{font-family:"Cairo";src:url("../../assets/fonts/cairo-latin-wght-normal.woff2") format("woff2");font-weight:200 1000;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+:root{
+  --bg:#060b18;--bg2:#0c1733;--card:rgba(255,255,255,.055);--card2:rgba(255,255,255,.09);
+  --line:rgba(255,255,255,.11);--text:#eef2ff;--muted:#9ba8c9;
+  --gold:#e8b94c;--gold2:#f8dd8a;--good:#2fca7a;--bad:#f0505f;
+  --accent:#3b6cff;--accent2:#7aa0ff;
+  --r:18px;--shadow:0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{
+  font-family:"Cairo",system-ui,"Segoe UI",Tahoma,sans-serif;color:var(--text);background:var(--bg);
+  background-image:
+    radial-gradient(1200px 600px at 85% -10%,color-mix(in srgb,var(--accent) 35%,transparent),transparent 60%),
+    radial-gradient(900px 500px at -10% 110%,rgba(232,185,76,.14),transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cpath d='M32 14l5 13 13 5-13 5-5 13-5-13-13-5 13-5z' fill='none' stroke='%23ffffff' stroke-opacity='.035'/%3E%3C/svg%3E");
+  background-attachment:fixed;overflow-x:hidden;transition:background .6s;
+  user-select:none;-webkit-user-select:none;
+}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
+.app{max-width:560px;margin:0 auto;min-height:100%;padding:max(14px,env(safe-area-inset-top)) 16px max(18px,env(safe-area-inset-bottom));display:flex;flex-direction:column}
+.screen{display:none;flex:1;flex-direction:column;animation:fadeIn .35s ease}
+.screen.active{display:flex}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- common ---------- */
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px 18px;border-radius:16px;font-weight:800;font-size:1.08rem;transition:transform .12s,filter .2s,background .2s}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:linear-gradient(135deg,var(--gold2),var(--gold) 55%,#c48f22);color:#2a1c00;box-shadow:0 8px 24px rgba(232,185,76,.35),inset 0 -3px 0 rgba(0,0,0,.15)}
+.btn-ghost{background:var(--card);border:1px solid var(--line)}
+.btn-ghost:hover{background:var(--card2)}
+.icon-btn{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--card);border:1px solid var(--line);font-size:1.15rem;flex:none}
+.icon-btn:active{transform:scale(.94)}
+.coins{display:flex;align-items:center;gap:6px;padding:7px 12px 7px 14px;border-radius:999px;background:rgba(232,185,76,.12);border:1px solid rgba(232,185,76,.35);font-weight:800;color:var(--gold2)}
+.coin{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff3c4,var(--gold) 45%,#a8761a);box-shadow:inset 0 0 0 2px rgba(120,80,0,.35);flex:none}
+.coins.bump{animation:bump .5s}
+@keyframes bump{40%{transform:scale(1.18)}}
+.muted{color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);backdrop-filter:blur(6px)}
+
+/* ---------- home ---------- */
+.home-top{display:flex;justify-content:space-between;align-items:center}
+.hero{text-align:center;margin:26px 0 22px}
+.emblem{width:118px;height:118px;margin:0 auto 6px;filter:drop-shadow(0 10px 30px rgba(232,185,76,.35));animation:float 5s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px) rotate(2deg)}}
+.hero h1{font-size:2.6rem;margin:0;line-height:1.2;font-weight:900;background:linear-gradient(180deg,#fff,var(--gold2) 70%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin:6px 0 0;color:var(--muted);font-size:1.02rem}
+.progress-card{padding:18px;margin-bottom:16px}
+.pc-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.pc-chapter{font-weight:800;font-size:1.12rem}
+.pc-level{color:var(--gold2);font-weight:800}
+.bar{height:10px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin:12px 0 8px}
+.bar i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width .6s}
+.home-actions{display:grid;gap:12px}
+.home-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.home-foot{margin-top:auto;padding-top:22px;text-align:center;font-size:.85rem;color:var(--muted)}
+.home-foot a{color:var(--muted)}
+.mini-stats{display:flex;justify-content:center;gap:18px;margin-top:10px;font-size:.92rem;color:var(--muted)}
+.mini-stats b{color:var(--text)}
+
+/* ---------- map ---------- */
+.bar-top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.bar-top h2{margin:0;font-size:1.25rem;flex:1}
+.chap-nav{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.chap-title{flex:1;text-align:center}
+.chap-title b{display:block;font-size:1.2rem}
+.chap-title small{color:var(--muted)}
+.levels{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.lv{aspect-ratio:1;border-radius:16px;background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;font-size:1.15rem;position:relative;transition:transform .12s}
+.lv:active{transform:scale(.94)}
+.lv small{font-size:.62rem;letter-spacing:1px;color:var(--gold);line-height:1;margin-top:2px;min-height:.7rem}
+.lv.done{background:linear-gradient(160deg,color-mix(in srgb,var(--accent) 45%,transparent),rgba(255,255,255,.04));border-color:color-mix(in srgb,var(--accent2) 50%,transparent)}
+.lv.current{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#2a1c00;box-shadow:0 0 0 4px rgba(232,185,76,.25);animation:pulse 1.8s infinite}
+.lv.current small{color:#5c3f00}
+@keyframes pulse{50%{box-shadow:0 0 0 8px rgba(232,185,76,.08)}}
+.lv.locked{opacity:.38;cursor:not-allowed}
+.lv.locked::after{content:"🔒";position:absolute;font-size:.7rem;top:5px;left:6px}
+.chap-reward{margin-top:16px;padding:14px;text-align:center;font-size:.95rem;color:var(--muted)}
+
+/* ---------- game ---------- */
+.gbar{display:flex;align-items:center;gap:10px}
+.glevel{flex:1;text-align:center;line-height:1.25}
+.glevel b{font-size:1.15rem;display:block}
+.glevel small{color:var(--muted);font-size:.82rem}
+.gprog{height:6px;border-radius:99px;background:rgba(255,255,255,.07);margin:12px 0 16px;overflow:hidden}
+.gprog i{display:block;height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:inherit;transition:width .5s}
+.puzzle{padding:22px 18px 20px;text-align:center;position:relative;min-height:150px;display:flex;flex-direction:column;justify-content:center}
+.tag{position:absolute;top:-13px;right:50%;transform:translateX(50%);padding:3px 14px;border-radius:999px;font-size:.82rem;font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;white-space:nowrap;box-shadow:0 4px 14px color-mix(in srgb,var(--accent) 50%,transparent)}
+.q{font-size:1.3rem;font-weight:700;line-height:1.75}
+.q .hint{display:block;font-size:.92rem;color:var(--muted);font-weight:600;margin-top:6px}
+.q .seq{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:12px;direction:ltr}
+.q .seq span{min-width:44px;padding:7px 7px;border-radius:12px;background:rgba(255,255,255,.07);border:1px solid var(--line);font-weight:900;font-size:1.18rem}
+.q .seq span.ask{background:rgba(232,185,76,.15);border-color:rgba(232,185,76,.5);color:var(--gold2)}
+.q .eqs{display:grid;gap:8px;margin-top:6px}
+.q .eq{direction:ltr;unicode-bidi:isolate;font-size:1.45rem;font-weight:900;letter-spacing:1px}
+.q .eq.ask{color:var(--gold2);margin-top:4px;padding-top:10px;border-top:1px dashed var(--line)}
+.q .big{font-size:2rem;font-weight:900;direction:ltr;unicode-bidi:isolate;display:block;margin-top:8px}
+.q .op{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:10px;border:2px dashed rgba(232,185,76,.6);color:var(--gold2);vertical-align:middle;margin:0 4px;font-size:1.3rem}
+.q .clock{width:96px;height:96px;margin:10px auto 0;display:block}
+
+.slots{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin:22px 0 10px;min-height:54px}
+.slot{width:46px;height:52px;border-radius:12px;background:rgba(0,0,0,.25);border:2px solid var(--line);display:grid;place-items:center;font-size:1.55rem;font-weight:900;transition:all .15s}
+.slot.filled{background:var(--card2);border-color:var(--accent2)}
+.slot.locked{background:rgba(47,202,122,.16);border-color:var(--good);color:#bff5d7}
+.slots.wrong .slot.filled{border-color:var(--bad);color:#ffc2c8}
+.slots.right .slot{border-color:var(--good);background:rgba(47,202,122,.2)}
+.shake{animation:shake .45s}
+@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+.tiles{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:8px 0 6px}
+.tile{width:48px;height:52px;border-radius:13px;font-size:1.55rem;font-weight:900;background:linear-gradient(180deg,#fdfbf5,#e6dcc4);color:#1d2340;box-shadow:0 4px 0 #b8a67c,0 6px 14px rgba(0,0,0,.3);transition:transform .1s,opacity .2s}
+.tile:active{transform:translateY(3px);box-shadow:0 1px 0 #b8a67c}
+.tile.used{opacity:0;pointer-events:none;transform:scale(.6)}
+.tile.gone{visibility:hidden}
+
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
+.choice{padding:16px 10px;border-radius:15px;background:var(--card);border:1px solid var(--line);font-size:1.22rem;font-weight:800;transition:all .15s;min-height:62px}
+.choice:hover{background:var(--card2)}
+.choice:active{transform:scale(.97)}
+.choice.right{background:rgba(47,202,122,.22);border-color:var(--good);color:#c9f7de}
+.choice.wrong{background:rgba(240,80,95,.15);border-color:var(--bad);color:#ffb9c0;opacity:.75;pointer-events:none}
+.choice.gone{opacity:.15;pointer-events:none}
+.choice .ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+
+.hints{display:flex;gap:10px;margin-top:auto;padding-top:20px}
+.hint-btn{flex:1;padding:10px 6px;border-radius:14px;background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.84rem;font-weight:700}
+.hint-btn .ic{font-size:1.25rem}
+.hint-btn .cost{display:flex;align-items:center;gap:4px;color:var(--gold2);font-weight:800}
+.hint-btn .cost .coin{width:13px;height:13px}
+.hint-btn:disabled{opacity:.35;cursor:not-allowed}
+.hint-btn:not(:disabled):active{transform:scale(.96)}
+.timer{display:flex;justify-content:center;gap:16px;font-size:.85rem;color:var(--muted);margin-top:12px}
+
+/* ---------- modal ---------- */
+.modal{position:fixed;inset:0;background:rgba(3,6,15,.72);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:16px;z-index:20}
+.modal.open{display:flex;animation:fadeIn .25s}
+.sheet{width:100%;max-width:440px;max-height:92vh;overflow:auto;padding:24px 20px 20px;border-radius:24px;background:linear-gradient(180deg,#14214a,#0b1430);border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.55);animation:pop .35s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.85);opacity:0}}
+.sheet h3{margin:0 0 6px;font-size:1.6rem;text-align:center}
+.sheet p{line-height:1.8}
+.stars{display:flex;justify-content:center;gap:8px;margin:10px 0;direction:ltr}
+.star{width:52px;height:52px;opacity:.18;transform:scale(.6);transition:all .4s cubic-bezier(.2,1.6,.4,1)}
+.star.on{opacity:1;transform:scale(1)}
+.star:nth-child(2){width:64px;height:64px;margin-top:-10px}
+.reward{display:flex;justify-content:center;align-items:center;gap:8px;font-weight:900;font-size:1.3rem;color:var(--gold2);margin:4px 0 12px}
+.solution{padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid var(--line);margin-bottom:16px;font-size:.98rem;line-height:1.8}
+.solution b{color:var(--gold2)}
+.banner{padding:10px 12px;border-radius:14px;background:rgba(232,185,76,.13);border:1px solid rgba(232,185,76,.4);color:var(--gold2);text-align:center;font-weight:800;margin-bottom:14px}
+.sheet .btns{display:grid;gap:10px}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 18px}
+.stat{padding:14px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid var(--line);text-align:center}
+.stat b{display:block;font-size:1.6rem;color:var(--gold2)}
+.stat span{font-size:.85rem;color:var(--muted)}
+.set-row{display:flex;justify-content:space-between;align-items:center;padding:13px 4px;border-bottom:1px solid var(--line);font-weight:700}
+.switch{width:52px;height:30px;border-radius:99px;background:rgba(255,255,255,.15);position:relative;transition:background .2s;flex:none}
+.switch::after{content:"";position:absolute;top:3px;right:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:transform .2s}
+.switch[aria-checked="true"]{background:var(--good)}
+.switch[aria-checked="true"]::after{transform:translateX(-22px)}
+.seg{display:flex;background:rgba(255,255,255,.08);border-radius:10px;padding:3px}
+.seg button{padding:5px 12px;border-radius:8px;font-weight:800}
+.seg button.on{background:var(--accent);color:#fff}
+.howto li{margin-bottom:8px;line-height:1.75}
+.danger{color:#ffb2ba}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translate(-50%,30px);opacity:0;padding:11px 18px;border-radius:14px;background:#1b2a57;border:1px solid var(--line);box-shadow:var(--shadow);font-weight:700;z-index:40;transition:all .3s;pointer-events:none;max-width:calc(100% - 32px);text-align:center}
+.toast.show{transform:translate(-50%,0);opacity:1}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:30}
+@media (max-width:380px){.tile{width:42px;height:48px;font-size:1.35rem}.slot{width:40px;height:48px;font-size:1.35rem}.q{font-size:1.15rem}.hero h1{font-size:2.2rem}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============ HOME ============ -->
+  <section class="screen active" id="home" aria-label="الشاشة الرئيسية">
+    <div class="home-top">
+      <button class="icon-btn" data-open="settings" aria-label="الإعدادات">⚙️</button>
+      <div class="coins" id="hCoins"><span class="coin"></span><b>0</b></div>
+    </div>
+    <div class="hero">
+      <svg class="emblem" viewBox="0 0 120 120" aria-hidden="true">
+        <defs>
+          <linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1bf"/><stop offset=".55" stop-color="#e8b94c"/><stop offset="1" stop-color="#a6741b"/></linearGradient>
+          <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5d86ff"/><stop offset="1" stop-color="#1d3fae"/></linearGradient>
+        </defs>
+        <path d="M60 4l12 28 30-6-14 27 26 17-30 8 3 30-27-16-27 16 3-30-30-8 26-17-14-27 30 6z" fill="url(#lg)" stroke="url(#gg)" stroke-width="3" stroke-linejoin="round"/>
+        <circle cx="60" cy="62" r="25" fill="#0b1636" stroke="url(#gg)" stroke-width="3"/>
+        <text x="60" y="75" text-anchor="middle" font-size="36" font-weight="900" fill="url(#gg)" font-family="Cairo, sans-serif">؟</text>
+      </svg>
+      <h1>ألغاز أوروك</h1>
+      <p>رحلة ألغاز وتحديات ذهنية… بمراحل لا تنتهي</p>
+    </div>
+
+    <div class="card progress-card">
+      <div class="pc-row"><span class="pc-chapter" id="hChapter">—</span><span class="pc-level" id="hLevel">—</span></div>
+      <div class="bar"><i id="hBar"></i></div>
+      <div class="pc-row muted" style="font-size:.88rem"><span id="hChapProg"></span><span id="hStars"></span></div>
+    </div>
+
+    <div class="home-actions">
+      <button class="btn btn-primary" id="playBtn">▶ <span id="playLabel">ابدأ اللعب</span></button>
+      <div class="home-grid">
+        <button class="btn btn-ghost" data-go="map">🗺️ المراحل</button>
+        <button class="btn btn-ghost" data-open="stats">📊 إحصائياتي</button>
+      </div>
+      <button class="btn btn-ghost" data-open="howto">💡 طريقة اللعب</button>
+    </div>
+    <div class="mini-stats"><span>🔥 سلسلة <b id="hStreak">0</b></span><span>🏆 أفضل <b id="hBest">0</b></span></div>
+    <div class="home-foot">صُنعت بحبّ في العراق · <a href="../../">URUKQI</a></div>
+  </section>
+
+  <!-- ============ MAP ============ -->
+  <section class="screen" id="map" aria-label="المراحل">
+    <div class="bar-top">
+      <button class="icon-btn" data-go="home" aria-label="رجوع">→</button>
+      <h2>المراحل</h2>
+      <div class="coins" id="mCoins"><span class="coin"></span><b>0</b></div>
+    </div>
+    <div class="chap-nav">
+      <button class="icon-btn" id="chapPrev" aria-label="الفصل السابق">→</button>
+      <div class="chap-title"><b id="mChapter">—</b><small id="mChapSub"></small></div>
+      <button class="icon-btn" id="chapNext" aria-label="الفصل التالي">←</button>
+    </div>
+    <div class="levels" id="levels"></div>
+    <div class="card chap-reward" id="chapReward"></div>
+  </section>
+
+  <!-- ============ GAME ============ -->
+  <section class="screen" id="game" aria-label="اللعبة">
+    <div class="gbar">
+      <button class="icon-btn" id="gBack" aria-label="رجوع">→</button>
+      <div class="glevel"><b id="gLevel">المرحلة ١</b><small id="gChapter"></small></div>
+      <div class="coins" id="gCoins"><span class="coin"></span><b>0</b></div>
+    </div>
+    <div class="gprog"><i id="gProg"></i></div>
+    <div class="card puzzle">
+      <span class="tag" id="gTag">لغز</span>
+      <div class="q" id="gQ"></div>
+    </div>
+    <div id="gArea"></div>
+    <div class="timer"><span>⏱ <b id="gTime">0</b> ث</span><span>✖ أخطاء: <b id="gMist">0</b></span></div>
+    <div class="hints" id="gHints"></div>
+  </section>
+</div>
+
+<!-- ============ MODAL ============ -->
+<div class="modal" id="modal" role="dialog" aria-modal="true"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<canvas id="fx"></canvas>
+
+<script>
+"use strict";
+/* =====================================================================
+   ألغاز أوروك — Endless Arabic puzzle game. No dependencies.
+   Every level N is generated deterministically from a seeded RNG,
+   so level 1000 is always the same puzzle for every player.
+   ===================================================================== */
+
+/* ---------------- utilities ---------------- */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function RNG(seed){
+  const f = mulberry32(seed >>> 0);
+  const api = {
+    f,
+    int:(a,b)=>a+Math.floor(f()*(b-a+1)),
+    pick:arr=>arr[Math.floor(f()*arr.length)],
+    chance:p=>f()<p,
+    shuffle:arr=>{const x=arr.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(f()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x},
+  };
+  return api;
+}
+function hashStr(s){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+const EAST = "٠١٢٣٤٥٦٧٨٩";
+function D(str){ // localise digits according to the player's setting
+  str = String(str);
+  // Only text outside of tags is touched, so SVG coordinates stay intact.
+  // Eastern digits are bidi class AN, which would flip "18 ? 6 = 108" in an
+  // LTR equation; wrapping each number in LRM marks keeps the order correct.
+  return S.digits === "east"
+    ? str.replace(/(<[^>]*>)|[0-9]+/g, (m, tag) => tag || "\u200E" + m.replace(/[0-9]/g, d => EAST[d]) + "\u200E")
+    : str;
+}
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const letters = w => Array.from(w);
+
+/* ---------------- content ---------------- */
+// [السؤال، الجواب، التصنيف]
+const RIDDLES = [
+["ما الشيء الذي كلما أخذتَ منه كَبُر؟","حفرة","لغز"],
+["له أسنان كثيرة لكنه لا يعضّ، وتستعمله كل صباح لشعرك. ما هو؟","مشط","لغز"],
+["يكتب ولا يقرأ، ويمشي على الورق بلا قدمين. ما هو؟","قلم","لغز"],
+["يمشي بلا أرجل، ويبكي بلا عيون، ويسير في السماء. ما هو؟","سحاب","لغز"],
+["لها عين واحدة لكنها لا ترى، وتخيط الثياب. ما هي؟","ابرة","لغز"],
+["يسمع بلا أذن، ويتكلم بلا لسان، وتحمله في جيبك. ما هو؟","هاتف","لغز"],
+["شيء كلما زاد نقص. ما هو؟","عمر","لغز"],
+["بيت بلا أبواب ولا نوافذ، وإذا خرج ساكنه كسره. ما هو؟","بيضة","لغز"],
+["يتبعك أينما ذهبتَ تحت الشمس، ويختفي في الظلام. ما هو؟","ظل","لغز"],
+["لها رقبة وليس لها رأس، ولها فم وليس لها لسان. ما هي؟","زجاجة","لغز"],
+["تحمله ويحملك، وتخلعه عند باب البيت. ما هو؟","حذاء","لغز"],
+["ما الشيء الذي يزداد بللاً كلما جفّف غيره؟","منشفة","لغز"],
+["له أوراق وليس نباتاً، وله جلد وليس حيواناً، وفيه علم كثير. ما هو؟","كتاب","لغز"],
+["ما الشيء الذي ينكسر بمجرد أن تنطق اسمه؟","صمت","لغز"],
+["أخضر في الحقل، أسود في السوق، أحمر في البيت. ما هو؟","شاي","لغز"],
+["يجري ولا يمشي، له فم ولا يتكلم، وله مجرى ولا ينام. ما هو؟","نهر","لغز"],
+["له أربع أرجل وظهر، لكنه لا يمشي أبداً. ما هو؟","كرسي","لغز"],
+["يدور حول البيت كله ولا يتحرك من مكانه. ما هو؟","سور","لغز"],
+["حرف تراه في «الليل» ثلاث مرات، وفي «النهار» مرة واحدة. ما هو؟","لام","لغز"],
+["هو ابن أمك وابن أبيك، وليس أخاك ولا أختك. فمن هو؟","انت","لغز"],
+["لها وجه وعقربان لكنها لا تلدغ. ما هي؟","ساعة","لغز"],
+["شيء تملكه أنت، لكن الآخرين يستعملونه أكثر منك. ما هو؟","اسم","لغز"],
+["تأكل ولا تشبع، وإذا شربت الماء ماتت. ما هي؟","نار","لغز"],
+["تعكس كل شيء أمامها، لكنها لا ترى شيئاً. ما هي؟","مرآة","لغز"],
+["هي أخت خالك، وليست خالتك. فمن هي؟","ام","لغز"],
+["يتكلم بكل اللغات دون أن يتعلمها، ويردّد كلامك في الجبال. ما هو؟","صدى","لغز"],
+["تقطعه وتبكي عليه، دون أن تكون حزيناً. ما هو؟","بصل","لغز"],
+["لا يعمل إلا إذا ضربته على رأسه. ما هو؟","مسمار","لغز"],
+["أنا ابن الماء، فإن تركوني في الماء ذُبتُ ومتّ. من أنا؟","ثلج","لغز"],
+["شيء ليس له بداية ولا نهاية. ما هو؟","دائرة","لغز"],
+["يقرصك في بطنك ولا تراه، ويذهب بلقمة. ما هو؟","جوع","لغز"],
+["يحيط بك في كل مكان، تتنفسه ولا تراه. ما هو؟","هواء","لغز"],
+["يملأ الغرفة كلها، لكنه لا يشغل أي مساحة. ما هو؟","ضوء","لغز"],
+["يظهر في ماء البئر ليلاً، لكنه لا يبتلّ أبداً. ما هو؟","قمر","لغز"],
+["له أسنان حادة كثيرة، ويأكل الخشب ولا يشبع. ما هو؟","منشار","لغز"],
+["ما الشيء الذي يقع في وسط «مكة»؟","كاف","لغز"],
+["ما الشيء الذي يقع في وسط «باريس»؟","راء","لغز"],
+["إذا لمسته صاح، وإذا تركته سكت، ويعلَّق عند الباب. ما هو؟","جرس","لغز"],
+["يُفتح كلما نزل المطر، ويُغلق إذا توقف. ما هي؟","مظلة","لغز"],
+["توقظك كل صباح، ولا تنام هي أبداً. ما هو؟","منبه","لغز"],
+["له جذور لا تُرى، وهو أعلى من الأشجار، ولا ينمو أبداً. ما هو؟","جبل","لغز"],
+["يدور ويدور طوال الصيف، ويطرد الحرّ، ولا يغادر مكانه. ما هي؟","مروحة","لغز"],
+["تقطعه كل يوم ذهاباً وإياباً، ولا يسيل منه دم. ما هو؟","طريق","لغز"],
+["له رأس وليس له عيون، ويثبّت الأوراق معاً. ما هو؟","دبوس","لغز"],
+["يتكلم ويغني ويعرض الأخبار، ويجتمع حوله أهل البيت. ما هو؟","تلفاز","لغز"],
+["جسمه من خشب ورأسه من نار. ما هو؟","كبريت","لغز"],
+["أبيض اللون، يذوب في الشاي ويحلّيه. ما هو؟","سكر","لغز"],
+["أحمر من الخارج، حَبّه كاللؤلؤ في الداخل. ما هو؟","رمان","لغز"],
+["فاكهة صفراء مقوّسة، يحبها القرد كثيراً. ما هي؟","موز","لغز"],
+["يحمل السفن الضخمة على ظهره، لكنه لا يستطيع حمل مسمار صغير. ما هو؟","بحر","لغز"],
+["يطير بلا ريش، ويحمل الناس بين المدن. ما هي؟","طائرة","لغز"],
+["يصعد إلى السماء بلا سلّم، ويخرج من النار. ما هو؟","دخان","لغز"],
+["مهما وضعته في الثلاجة يبقى حاراً. ما هو؟","فلفل","لغز"],
+["له عنق وليس له رأس، وله ذراعان بلا يدين. ما هو؟","قميص","لغز"],
+["مليء بالثقوب، ومع ذلك يحتفظ بالماء. ما هو؟","اسفنج","لغز"],
+["يمشي بلا رجلين، ولا يدخل إلا من الأذنين. ما هو؟","صوت","لغز"],
+["فيها مدن بلا بيوت، وأنهار بلا ماء، وجبال بلا صخور. ما هي؟","خريطة","لغز"],
+["ينكسر دون أن يلمسه أحد، إذا لم تلتزم به. ما هو؟","وعد","لغز"],
+["إذا تقاسمته مع الناس زاد ولم ينقص. ما هو؟","علم","لغز"],
+["يُضرب ويُعجن ويُقطَّع ولا يصرخ، ومنه يُصنع الخبز. ما هو؟","عجين","لغز"],
+["يقرصك في الشتاء ولا تراه. ما هو؟","برد","لغز"],
+["أمامك دائماً لكنك لا تستطيع رؤيته. ما هو؟","مستقبل","لغز"],
+["هو أخو عمّك، وليس عمّك. فمن هو؟","اب","لغز"],
+["صغيرة ونورها يتلألأ ليلاً في الحقول. ما هي؟","يراعة","لغز"],
+["تراه في الليل ولا تراه في النهار، ويتلألأ في السماء. ما هو؟","نجم","لغز"],
+["تبكي وهي تضيء، وتقصر كلما أضاءت. ما هي؟","شمعة","لغز"],
+["يأخذونها منك قبل أن تعطيها، بضغطة زر. ما هي؟","صورة","لغز"],
+["يمشي على أربع صباحاً، وعلى اثنتين ظهراً، وعلى ثلاث مساءً. من هو؟","انسان","لغز"],
+["تمشي فوق الماء بلا أرجل، وتدفعها الريح بشراعها. ما هي؟","سفينة","لغز"],
+["لها عينان زجاجيتان لا ترى بهما، وتجلس على أنفك لترى أنت. ما هي؟","نظارة","لغز"],
+["له مفاتيح كثيرة، لا يفتح بها باباً، لكنه يعزف الألحان. ما هو؟","بيانو","لغز"],
+["تراه في الماء ولا يبتلّ، يتبعك ولا يتعب. ما هو؟","خيال","لغز"],
+["يُرفع إلى الأعلى بحبل، ويرفرف فوق المباني دون أن يطير. ما هو؟","علم","لغز"],
+["بيضاء كالثلج، تُكتب عليها الدروس بالقلم الأسود. ما هي؟","سبورة","لغز"],
+["تلبسه في رأسك، ويحميك من الشمس. ما هي؟","قبعة","لغز"],
+["أنا أُفتح وأُغلق، ولا أدخل البيت ولا أخرج منه. من أنا؟","باب","لغز"],
+["لها أوراق وجذع وجذور، لكنها ليست كتاباً. ما هي؟","شجرة","لغز"],
+["ما الشيء الذي له مدخل ولا مخرج له، وتضع فيه قدمك كل صباح؟","جورب","لغز"],
+["سفينة الصحراء. ما هو؟","جمل","معلومة"],
+["ملك الغابة. من هو؟","اسد","معلومة"],
+["طائر يقلّد صوت الإنسان. ما هو؟","ببغاء","معلومة"],
+["حيوان يغيّر لونه ليتخفّى. ما هو؟","حرباء","معلومة"],
+["أطول الحيوانات رقبة. ما هي؟","زرافة","معلومة"],
+["الكوكب الأحمر في مجموعتنا الشمسية. ما هو؟","مريخ","معلومة"],
+["أكبر كواكب المجموعة الشمسية. ما هو؟","مشتري","معلومة"],
+["عاصمة العراق ومدينة ألف ليلة وليلة. ما هي؟","بغداد","معلومة"],
+["أطول نهر في العالم. ما هو؟","نيل","معلومة"],
+["المعدن الوحيد السائل في درجة حرارة الغرفة. ما هو؟","زئبق","معلومة"],
+["أقرب نجم إلى الأرض. ما هو؟","شمس","معلومة"],
+["حيوان يُلقَّب بأبي الحصين لمكره. ما هو؟","ثعلب","معلومة"],
+["حشرة تصنع العسل. ما هي؟","نحلة","معلومة"],
+["طائر لا يطير ويعيش في القطب الجنوبي. ما هو؟","بطريق","معلومة"],
+["أسرع حيوان بري في العالم. ما هو؟","فهد","معلومة"],
+["يصنع بيته من خيوط رفيعة ليصطاد بها. ما هو؟","عنكبوت","معلومة"],
+["أداة نرى بها البعيد قريباً. ما هي؟","منظار","معلومة"],
+["أداة تدلّك على الاتجاهات وتشير دائماً نحو الشمال. ما هي؟","بوصلة","معلومة"],
+["المادة التي يُصنع منها الزجاج. ما هي؟","رمل","معلومة"],
+["الغاز الذي نتنفسه لنعيش. ما هو؟","اكسجين","معلومة"],
+["الحضارة التي اخترعت الكتابة المسمارية في جنوب العراق. ما هي؟","سومر","معلومة"],
+["بطل الملحمة الشهيرة وملك أوروك. من هو؟","جلجامش","معلومة"],
+["ملك بابل صاحب المسلّة الشهيرة للقوانين. من هو؟","حمورابي","معلومة"],
+["المدينة الأثرية الشهيرة بجنائنها المعلّقة. ما هي؟","بابل","معلومة"],
+["النهر الذي يشقّ مدينة بغداد. ما هو؟","دجلة","معلومة"],
+["أداة نقيس بها درجة حرارة الجسم. ما هي؟","محرار","معلومة"],
+["أداة نعرف بها أوزان الأشياء. ما هي؟","ميزان","معلومة"],
+["ثمرة النخلة، وأشهر ما يُهدى من العراق. ما هي؟","تمر","معلومة"],
+["حيوان يُضرب به المثل في الوفاء. ما هو؟","كلب","معلومة"],
+["حيوان بحري ذكي يتنفس الهواء ويحب اللعب. ما هو؟","دلفين","معلومة"],
+["أكبر قارات العالم مساحة. ما هي؟","اسيا","معلومة"],
+["أكبر محيطات العالم. ما هو؟","هادئ","معلومة"],
+["عدد أرجل العنكبوت؟ اكتبه بالحروف.","ثمانية","معلومة"],
+["الفصل الذي تتساقط فيه أوراق الأشجار. ما هو؟","خريف","معلومة"],
+["العضو الذي يضخّ الدم في الجسم. ما هو؟","قلب","معلومة"],
+["أصغر وحدة بنائية في جسم الكائن الحي. ما هي؟","خلية","معلومة"],
+["الكوكب الذي نعيش عليه. ما هو؟","ارض","معلومة"],
+["المدينة العراقية الملقّبة بالفيحاء وفيها شط العرب. ما هي؟","بصرة","معلومة"],
+["المئذنة الملوية الشهيرة موجودة في هذه المدينة. ما هي؟","سامراء","معلومة"],
+["اللون الناتج من خلط الأزرق والأصفر. ما هو؟","اخضر","معلومة"],
+["عدد أضلاع المثلث؟ اكتبه بالحروف.","ثلاثة","معلومة"],
+["الشكل الذي له أربعة أضلاع متساوية وأربع زوايا قائمة. ما هو؟","مربع","معلومة"],
+];
+
+const WORDS = {
+  "الحيوانات":["ارنب","غزال","حصان","دلفين","نمر","قنفذ","تمساح","بومة","صقر","نعامة","فراشة","ذئب","خروف","ضفدع","فيل","سنجاب","حمامة","طاووس","كنغر","قرد"],
+  "الفواكه":["تفاح","برتقال","عنب","مشمش","كرز","بطيخ","ليمون","خوخ","اناناس","فراولة","تين","كمثرى","مانجو","كيوي","جوافة"],
+  "الخضروات":["خيار","جزر","باذنجان","بطاطا","ثوم","فجل","ملفوف","قرع","بازلاء","سبانخ","كرفس","شمندر"],
+  "الدول":["سوريا","تونس","ليبيا","لبنان","فلسطين","عمان","قطر","تركيا","ايران","الكويت","المغرب","الجزائر","السعودية","اليمن","السودان","الهند","الصين","اليابان","فرنسا","البرازيل","مصر","الاردن"],
+  "مدن العراق":["البصرة","الموصل","اربيل","كربلاء","النجف","الناصرية","كركوك","الحلة","السماوة","الديوانية","العمارة","الكوت","دهوك","الرمادي","الفلوجة","بعقوبة","تكريت"],
+  "المهن":["طبيب","مهندس","معلم","نجار","خباز","طيار","حداد","مزارع","محامي","صيدلي","رسام","شرطي","ممرض","خياط","صحفي","حلاق"],
+  "أدوات المنزل":["ثلاجة","ملعقة","سكين","وسادة","مكنسة","سجادة","فرن","نافذة","غسالة","مدفأة","ستارة","صحن","ابريق","مقلاة"],
+  "الرياضة":["سباحة","ملاكمة","تنس","شطرنج","مصارعة","فروسية","جودو","رماية","تجديف","كاراتيه","جمباز","غطس"],
+  "الألوان":["احمر","ازرق","اصفر","بنفسجي","برتقالي","رمادي","وردي","بني","ابيض","اسود","ذهبي","فضي"],
+  "جسم الإنسان":["رئة","معدة","كبد","عين","انف","ركبة","كتف","اصابع","جبين","رقبة","كلية","حاجب","لسان","ظهر"],
+  "الطبيعة":["صحراء","غابة","بحيرة","شلال","بركان","وادي","جزيرة","شاطئ","كهف","هضبة","واحة","سهل"],
+};
+// pairs that confuse players in "odd one out" (e.g. tomato debates) are skipped
+const ODD_BLOCK = new Set(["الفواكه|الخضروات","الخضروات|الفواكه","الدول|مدن العراق","مدن العراق|الدول","الطبيعة|الدول"]);
+const FLAT_WORDS = Object.entries(WORDS).flatMap(([c,ws]) => ws.map(w => [w,c]));
+
+const CHAPTERS = ["بوابة عشتار","أسوار أوروك","زقورة أور","جنائن بابل","مسلّة حمورابي","ملحمة جلجامش","مكتبة آشوربانيبال","شطّ العرب","أهوار الجنوب","نينوى العظيمة","بيت الحكمة","شارع المتنبي","قلعة أربيل","ملوية سامراء","طاق كسرى","نخيل البصرة","جبال كردستان","سوق السراي","وادي الرافدين","تاج أوروك"];
+const CHAPTER_HUES = [222,262,196,160,28,340,200,190,140,8,280,40,24,32,300,100,170,350,210,45];
+const PER_CHAPTER = 20;
+const NAMES = ["علي","زينب","حسن","مريم","أحمد","سارة","يوسف","نور","عمر","فاطمة","كرار","هبة","مصطفى","رقية","حيدر","آية"];
+const DAYS = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+const EMOJI_SETS = [["🍎","🍌","🍇"],["⭐","🌙","☀️"],["🐱","🐶","🐭"],["🌴","🌵","🌻"],["🚗","🚲","🚀"],["⚽","🏀","🎾"],["🍩","🍪","🧁"],["🐟","🐢","🦀"],["💎","👑","🔑"],["🎈","🎁","🎀"]];
+const PRAISE = ["أحسنت!","رائع!","عبقري!","ممتاز!","مذهل!","ذكاء خارق!","تبارك الرحمن!","بطل!"];
+
+/* ---------------- state ---------------- */
+const SAVE_KEY = "urukqi-alghaz-v1";
+const DEFAULT = {max:1,coins:100,stars:{},solved:0,streak:0,best:0,firstTry:0,mistakes:0,hintsUsed:0,sound:true,vibe:true,digits:"east",daily:"",played:0};
+let S = Object.assign({}, DEFAULT);
+try { const raw = localStorage.getItem(SAVE_KEY); if (raw) S = Object.assign({}, DEFAULT, JSON.parse(raw)); } catch(e) {}
+function save(){ try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch(e) {} }
+
+/* ---------------- level schedule ---------------- */
+const TYPES = {
+  riddle:  {w:32,min:1,  tag:"لغز"},
+  scramble:{w:15,min:1,  tag:"رتّب الحروف"},
+  sequence:{w:12,min:3,  tag:"أكمل المتتالية"},
+  odd:     {w:8, min:4,  tag:"الكلمة الدخيلة"},
+  operator:{w:8, min:5,  tag:"العملية الناقصة"},
+  emoji:   {w:9, min:7,  tag:"معادلة الرموز"},
+  days:    {w:5, min:9,  tag:"لغز الأيام"},
+  word:    {w:7, min:11, tag:"مسألة ذكاء"},
+  clock:   {w:5, min:14, tag:"لغز الوقت"},
+};
+const sched = {types:[null], occ:[null], count:{}};
+function weightedType(r, n){
+  const pool = Object.entries(TYPES).filter(([,t]) => n >= t.min);
+  const total = pool.reduce((s,[,t]) => s + t.w, 0);
+  let x = r.f() * total;
+  for (const [k,t] of pool){ if ((x -= t.w) < 0) return k; }
+  return pool[0][0];
+}
+function ensureSched(n){
+  while (sched.types.length <= n){
+    const i = sched.types.length;
+    let t;
+    if (i <= 3) t = ["riddle","scramble","riddle"][i-1];
+    else {
+      const r = RNG(i * 7919 + 17), prev = sched.types[i-1], prev2 = sched.types[i-2];
+      for (let k = 0; k < 10; k++){
+        t = weightedType(r, i);
+        if (t !== prev || (t === "riddle" && prev2 !== "riddle")) break;
+      }
+    }
+    sched.occ.push(sched.count[t] || 0);
+    sched.count[t] = (sched.count[t] || 0) + 1;
+    sched.types.push(t);
+  }
+}
+const EASY_RIDDLES = [7, 1, 8, 2, 20, 4];  // بيضة، مشط، ظل، قلم، ساعة، إبرة
+const permCache = {};
+function bankIndex(name, len, occ){
+  if (name === "riddle" && occ < EASY_RIDDLES.length) return EASY_RIDDLES[occ];
+  const cycle = Math.floor(occ / len), key = name + cycle;
+  if (!permCache[key]) permCache[key] = RNG(hashStr(key)).shuffle([...Array(len).keys()]);
+  return permCache[key][occ % len];
+}
+const diff = n => 1 + Math.floor((n - 1) / 10);           // grows forever
+const chapterOf = n => Math.floor((n - 1) / PER_CHAPTER);  // 0-based
+function chapterName(c){
+  const base = CHAPTERS[c % CHAPTERS.length], round = Math.floor(c / CHAPTERS.length);
+  return round ? `${base} · الدورة ${round + 1}` : base;
+}
+
+/* ---------------- helpers for generators ---------------- */
+const FILLER = "ابتثجحخدرزسشصطعفقكلمنهويةىأ";
+function tilesFor(r, answer, extra){
+  const a = letters(answer);
+  const total = Math.min(16, Math.max(a.length + extra, a.length));
+  const fill = [];
+  while (a.length + fill.length < total) fill.push(r.pick(Array.from(FILLER)));
+  let t;
+  for (let k = 0; k < 6; k++){ t = r.shuffle(a.concat(fill)); if (t.join("") !== answer) break; }
+  return {tiles:t, fillerCount:fill.length};
+}
+function numChoices(r, ans, spread){
+  const set = new Set([ans]);
+  let guard = 0;
+  while (set.size < 4 && guard++ < 200){
+    const off = r.int(1, Math.max(2, spread)) * (r.chance(.5) ? 1 : -1);
+    if (ans + off >= 0) set.add(ans + off);
+  }
+  let v = ans + 1; while (set.size < 4) set.add(v++);
+  const arr = r.shuffle([...set]);
+  return {choices: arr.map(x => `<span class="ltr">${x}</span>`), correct: arr.indexOf(ans)};
+}
+function textChoices(r, ans, pool){
+  const others = r.shuffle(pool.filter(x => x !== ans)).slice(0,3);
+  const arr = r.shuffle([ans, ...others]);
+  return {choices: arr, correct: arr.indexOf(ans)};
+}
+
+/* ---------------- puzzle generators ---------------- */
+const GEN = {
+  riddle(n, r, occ){
+    const [q, a, cat] = RIDDLES[bankIndex("riddle", RIDDLES.length, occ)];
+    const d = diff(n);
+    const {tiles, fillerCount} = tilesFor(r, a, Math.max(4, 12 - a.length) + Math.min(2, Math.floor(d/4)));
+    return {tag: cat === "معلومة" ? "سؤال معلومات" : "لغز", q: esc(q), mode:"tiles", answer:a, tiles, fillerCount,
+            explain:`الجواب: <b>${a}</b>`};
+  },
+  scramble(n, r, occ){
+    const [w, cat] = FLAT_WORDS[bankIndex("scramble", FLAT_WORDS.length, occ)];
+    const d = diff(n);
+    const extra = d < 3 ? 0 : d < 6 ? 2 : 4;
+    const {tiles, fillerCount} = tilesFor(r, w, extra);
+    return {tag:"رتّب الحروف", q:`رتّب الحروف لتكوّن كلمة صحيحة<span class="hint">التصنيف: ${cat}${extra?" · انتبه: بعض الحروف زائدة":""}</span>`,
+            mode:"tiles", answer:w, tiles, fillerCount, explain:`الكلمة هي: <b>${w}</b> (من ${cat})`};
+  },
+  sequence(n, r){
+    const d = diff(n);
+    const kinds = [["arith",1],["desc",1],["diffinc",2],["geo",2],["squares",3],["fib",3],["alt",4],["dbl",5],["primes",5],["inter",6],["mulinc",6],["cubes",8]]
+      .filter(([,m]) => d >= m).map(([k]) => k);
+    const kind = r.pick(kinds);
+    let t = [], ex = "", len = 5;
+    const big = Math.min(d, 15);
+    switch(kind){
+      case "arith": { const a=r.int(1,10+big*3), s=r.int(2,3+big*2); for(let i=0;i<6;i++) t.push(a+s*i); ex=`كل عدد يزيد بمقدار ${s} عن الذي قبله.`; break; }
+      case "desc":  { const s=r.int(2,3+big*2), a=s*6+r.int(1,20+big*3); for(let i=0;i<6;i++) t.push(a-s*i); ex=`كل عدد ينقص بمقدار ${s} عن الذي قبله.`; break; }
+      case "diffinc":{ let a=r.int(1,10+big), s=r.int(1,3), inc=r.int(1,Math.min(3,1+Math.floor(big/3))); for(let i=0;i<6;i++){ t.push(a); a+=s; s+=inc; } ex=`الفرق بين الأعداد يزداد بمقدار ${inc} في كل خطوة.`; break; }
+      case "geo":   { const a=r.int(1,4+Math.floor(big/2)), q=r.int(2,3); for(let i=0;i<6;i++) t.push(a*q**i); ex=`كل عدد يساوي العدد الذي قبله مضروباً في ${q}.`; break; }
+      case "squares":{ const k=r.int(1,4+big); for(let i=0;i<6;i++) t.push((k+i)**2); ex=`مربعات الأعداد المتتالية: ${k}²، ${k+1}²، ${k+2}²…`; break; }
+      case "fib":   { let a=r.int(1,3+big), b=r.int(a,4+big); for(let i=0;i<7;i++){ t.push(a); [a,b]=[b,a+b]; } len=6; ex=`كل عدد يساوي مجموع العددين اللذين قبله.`; break; }
+      case "alt":   { let a=r.int(5,20+big*2); const x=r.int(3,5+big), y=r.int(1,x-1); for(let i=0;i<7;i++){ t.push(a); a += i%2===0 ? x : -y; } len=6; ex=`نضيف ${x} ثم نطرح ${y} بالتناوب.`; break; }
+      case "dbl":   { let a=r.int(1,6); const k=r.int(1,3), sign=r.chance(.5)?1:-1; if(sign<0) a=r.int(k+2,8); for(let i=0;i<6;i++){ t.push(a); a = a*2 + sign*k; } ex=`كل عدد = ضعف الذي قبله ${sign>0?"زائد":"ناقص"} ${k}.`; break; }
+      case "primes":{ const P=[2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97]; const s=r.int(0,Math.min(14,big)); t=P.slice(s,s+6); ex=`الأعداد الأولية المتتالية (لا تقبل القسمة إلا على نفسها وعلى الواحد).`; break; }
+      case "inter": { const a=r.int(1,10), s1=r.int(2,6), b=r.int(20,40+big), s2=r.int(1,5); for(let i=0;i<4;i++){ t.push(a+s1*i); t.push(b-s2*i);} t=t.slice(0,8); len=7; ex=`متتاليتان متداخلتان: الأولى تزيد ${s1} والثانية تنقص ${s2}.`; break; }
+      case "mulinc":{ let a=r.int(1,3); for(let i=1;i<=6;i++){ t.push(a); a*= (i+1); } ex=`نضرب في 2 ثم 3 ثم 4 ثم 5… بالتتابع.`; break; }
+      case "cubes": { const k=r.int(1,5); for(let i=0;i<6;i++) t.push((k+i)**3); ex=`مكعبات الأعداد المتتالية: ${k}³، ${k+1}³…`; break; }
+    }
+    const shown = t.slice(0,len), ans = t[len];
+    const spread = Math.max(3, Math.round(Math.abs(ans - shown[len-1]) / 2) || 3);
+    const c = numChoices(r, ans, spread);
+    return {tag:"أكمل المتتالية", q:`ما العدد التالي في المتتالية؟<div class="seq">${shown.map(x=>`<span>${x}</span>`).join("")}<span class="ask">؟</span></div>`,
+            mode:"choices", ...c, explain:`الجواب: <b>${ans}</b><br>${ex}`};
+  },
+  odd(n, r){
+    const cats = Object.keys(WORDS);
+    let A, B;
+    do { A = r.pick(cats); B = r.pick(cats); } while (A === B || ODD_BLOCK.has(A+"|"+B));
+    const three = r.shuffle(WORDS[A]).slice(0,3), odd = r.pick(WORDS[B]);
+    const arr = r.shuffle([...three, odd]);
+    return {tag:"الكلمة الدخيلة", q:`أيّ كلمة لا تنتمي إلى المجموعة؟<span class="hint">ثلاث كلمات من تصنيف واحد… وواحدة دخيلة</span>`,
+            mode:"choices", choices:arr, correct:arr.indexOf(odd),
+            explain:`الدخيلة: <b>${odd}</b> لأنها من «${B}»، والبقية من «${A}».`};
+  },
+  operator(n, r){
+    const d = diff(n);
+    const OPS = ["+","−","×","÷"];
+    const ap = (a,o,b) => o==="+"?a+b : o==="−"?a-b : o==="×"?a*b : (b!==0 && a%b===0 ? a/b : NaN);
+    const high = o => o==="×"||o==="÷";
+    const ev = (a,o1,b,o2,c) => (high(o2) && !high(o1)) ? ap(a,o1,ap(b,o2,c)) : ap(ap(a,o1,b),o2,c);
+    if (d < 4){
+      for (let g = 0; g < 200; g++){
+        const o = r.pick(OPS); let a = r.int(2,9+d*3), b = r.int(2,9+d);
+        if (o === "÷") a = b * r.int(2, 9);
+        if (o === "−" && a < b) [a,b] = [b,a];
+        const res = ap(a,o,b);
+        if (OPS.filter(x => ap(a,x,b) === res).length !== 1) continue;
+        return {tag:"العملية الناقصة", q:`ما العملية الصحيحة مكان المربّع؟<span class="big">${a} <span class="op">?</span> ${b} = ${res}</span>`,
+                mode:"choices", choices:OPS.map(x=>`<span class="ltr">${x}</span>`), correct:OPS.indexOf(o),
+                explain:`الجواب: <b class="ltr">${a} ${o} ${b} = ${res}</b>`};
+      }
+    }
+    for (let g = 0; g < 400; g++){
+      const a = r.int(2,8+d), b = r.int(2,8+d), c = r.int(2,8+Math.floor(d/2));
+      const combos = [];
+      for (const o1 of OPS) for (const o2 of OPS){ const v = ev(a,o1,b,o2,c); if (Number.isInteger(v) && v >= 0) combos.push([o1,o2,v]); }
+      if (combos.length < 4) continue;
+      const target = r.pick(combos);
+      if (combos.filter(x => x[2] === target[2]).length !== 1) continue;
+      const others = r.shuffle(combos.filter(x => x[2] !== target[2])).slice(0,3);
+      const arr = r.shuffle([target, ...others]);
+      return {tag:"العمليتان الناقصتان", q:`ما العمليتان الصحيحتان بالترتيب من اليسار؟<span class="hint">تذكّر: الضرب والقسمة قبل الجمع والطرح</span><span class="big">${a} <span class="op">?</span> ${b} <span class="op">?</span> ${c} = ${target[2]}</span>`,
+              mode:"choices", choices:arr.map(x=>`<span class="ltr">${x[0]} &nbsp; ${x[1]}</span>`), correct:arr.indexOf(target),
+              explain:`الجواب: <b class="ltr">${a} ${target[0]} ${b} ${target[1]} ${c} = ${target[2]}</b>`};
+    }
+    return GEN.sequence(n, r);
+  },
+  emoji(n, r){
+    const d = diff(n), [A,B,C] = r.shuffle(r.pick(EMOJI_SETS));
+    const top = 4 + Math.min(d, 12);
+    let a, b, c;
+    do { a = r.int(1,top); b = r.int(1,top); c = r.int(1,top); } while (a===b || b===c || a===c);
+    const lines = [`${A} + ${A} + ${A} = ${3*a}`, `${A} + ${B} + ${B} = ${a+2*b}`];
+    lines.push(d >= 6 ? `${B} × ${C} = ${b*c}` : `${B} + ${C} + ${C} = ${b+2*c}`);
+    let ask, ans, ex;
+    if (d < 4){ ask = `${A} + ${B} + ${C}`; ans = a+b+c; ex = `${a} + ${b} + ${c} = ${ans}`; }
+    else if (d < 8){ ask = `${A} + ${B} × ${C}`; ans = a+b*c; ex = `${a} + ${b} × ${c} = ${ans} (الضرب أولاً)`; }
+    else { ask = `${C} × ${C} − ${A} + ${B}`; ans = c*c-a+b; ex = `${c} × ${c} − ${a} + ${b} = ${ans}`; }
+    const ch = numChoices(r, ans, Math.max(3, Math.round(ans/5)));
+    return {tag:"معادلة الرموز", q:`كل رمز يمثّل عدداً. أوجد قيمة السطر الأخير<div class="eqs">${lines.map(l=>`<div class="eq">${l}</div>`).join("")}<div class="eq ask">${ask} = ?</div></div>`,
+            mode:"choices", ...ch,
+            explain:`${A} = ${a}، ${B} = ${b}، ${C} = ${c}<br>الجواب: <b class="ltr">${ex}</b>`};
+  },
+  days(n, r){
+    const d = diff(n), t = r.int(0,6), k = r.int(3, 10 + d*12), back = d >= 3 && r.chance(.4);
+    const res = ((t + (back ? -k : k)) % 7 + 7) % 7;
+    const c = textChoices(r, DAYS[res], DAYS);
+    return {tag:"لغز الأيام", q:`إذا كان اليوم <b>${DAYS[t]}</b>، فما اليوم الذي كان ${back?"قبل":"بعد"} <b>${k}</b> ${k<=10?"أيام":"يوماً"}${back?"":" من الآن"}؟`,
+            mode:"choices", ...c,
+            explain:`${k} يوماً = ${Math.floor(k/7)} أسابيع كاملة والباقي ${k%7} أيام؛ نعدّ ${k%7} ${back?"إلى الوراء":"إلى الأمام"} من ${DAYS[t]} فنصل إلى <b>${DAYS[res]}</b>.`};
+  },
+  word(n, r){
+    const d = diff(n), nm = r.pick(NAMES), nm2 = r.pick(NAMES.filter(x=>x!==nm));
+    const kinds = ["father","sumdiff","money","speed","pages"]; if (d >= 4) kinds.push("legs","workers");
+    let q, ans, ex;
+    switch (r.pick(kinds)){
+      case "father": { const x=r.int(4,12), k=r.int(2,5), y=r.int(2,10); ans=k*x+y; q=`عمر ${nm} الآن ${x} سنوات، وعمر والده ${k} أضعاف عمره. كم سيكون عمر الوالد بعد ${y} سنوات؟`; ex=`عمر الوالد الآن ${x} × ${k} = ${k*x}، وبعد ${y} سنوات يصبح ${ans}.`; break; }
+      case "sumdiff":{ const s=r.int(3,15), dd=r.int(1,10), b=s+dd; ans=b; q=`مجموع عمري ${nm} و${nm2} ${b+s} سنة، و${nm} أكبر من ${nm2} بـ${dd} سنوات. كم عمر ${nm}؟`; ex=`(${b+s} + ${dd}) ÷ 2 = ${b}.`; break; }
+      case "money":  { const m=r.int(5,25)*2, y=r.int(1,m/2-1); ans=m/2-y; q=`كان مع ${nm} ${m} ألف دينار، أعطى نصفها لأخيه، ثم اشترى كتاباً بـ${y} آلاف. كم ألفاً بقي معه؟`; ex=`نصف ${m} = ${m/2}، ثم ${m/2} − ${y} = ${ans}.`; break; }
+      case "speed":  { const v=r.int(4,12)*10, h=r.int(2,6); ans=v*h; q=`سيارة تسير بسرعة ثابتة ${v} كم في الساعة. كم كيلومتراً تقطع في ${h} ساعات؟`; ex=`${v} × ${h} = ${ans} كم.`; break; }
+      case "pages":  { const p=r.int(5,20), k=r.int(4,15); ans=k; q=`كتاب فيه ${p*k} صفحة، تقرأ ${nm} منه ${p} صفحة كل يوم. بعد كم يوم تُنهيه؟`; ex=`${p*k} ÷ ${p} = ${k} أيام.`; break; }
+      case "legs":   { const c=r.int(2,12), s=r.int(2,12); ans=s; q=`في مزرعة دجاج وخراف، عدد الرؤوس ${c+s} وعدد الأرجل ${2*c+4*s}. كم عدد الخراف؟`; ex=`لو كانت كلها دجاجاً لكانت الأرجل ${2*(c+s)}؛ الزيادة ${2*s} ÷ 2 = ${s} خراف.`; break; }
+      case "workers":{ const a=r.int(2,6), b=r.pick([2,3,4,6].filter(x=>x!==a)), k=r.int(1,5); const t=b*k; ans=a*t/b; q=`${a} عمّال يبنون جداراً في ${t} أيام. كم يوماً يحتاج ${b} عمّال لبناء الجدار نفسه بالسرعة نفسها؟`; ex=`العمل الكلي = ${a} × ${t} = ${a*t} يوم-عامل، و${a*t} ÷ ${b} = ${ans}.`; break; }
+    }
+    const c = numChoices(r, ans, Math.max(3, Math.round(ans/6)));
+    return {tag:"مسألة ذكاء", q:esc(q).replace(/(\d+)/g,'<b>$1</b>'), mode:"choices", ...c, explain:`الجواب: <b>${ans}</b><br>${ex}`};
+  },
+  clock(n, r){
+    const d = diff(n), step = d >= 8 ? 1 : 5;
+    const h = r.int(1,12), m = r.int(0, 59/step|0) * step;
+    const addH = r.int(0, 2 + Math.min(d, 8)), addM = r.int(1, 11) * 5;
+    const back = d >= 5 && r.chance(.4);
+    const tm = (hh, mm) => `${hh}:${String(mm).padStart(2,"0")}`;
+    const toMin = (hh, mm) => (hh % 12) * 60 + mm;
+    const fromMin = x => { x = ((x % 720) + 720) % 720; const hh = Math.floor(x/60) || 12; return tm(hh, x % 60); };
+    const start = toMin(h,m), delta = (back?-1:1) * (addH*60 + addM), ans = fromMin(start + delta);
+    const set = new Set([ans]);
+    for (const off of r.shuffle([60,-60,15,-15,30,-30,120,-120,5,-5])) { if (set.size >= 4) break; set.add(fromMin(start + delta + off)); }
+    const arr = r.shuffle([...set]);
+    const hand = (len, deg, w) => { const rad=(deg-90)*Math.PI/180; return `<line x1="50" y1="50" x2="${50+len*Math.cos(rad)}" y2="${50+len*Math.sin(rad)}" stroke-width="${w}" stroke-linecap="round"/>`; };
+    const svg = `<svg class="clock" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="rgba(255,255,255,.06)" stroke="#e8b94c" stroke-width="3"/>${[...Array(12)].map((_,i)=>{const a=i*30*Math.PI/180;return `<circle cx="${50+38*Math.sin(a)}" cy="${50-38*Math.cos(a)}" r="${i%3?1.5:2.6}" fill="#9ba8c9"/>`}).join("")}<g stroke="#eef2ff">${hand(24,(h%12)*30+m/2,4)}</g><g stroke="#e8b94c">${hand(34,m*6,2.5)}</g><circle cx="50" cy="50" r="3" fill="#e8b94c"/></svg>`;
+    const hw = addH === 1 ? "ساعة واحدة" : addH === 2 ? "ساعتين" : addH <= 10 ? `${addH} ساعات` : `${addH} ساعة`;
+    const dur = addH ? `${hw} و${addM} دقيقة` : `${addM} دقيقة`;
+    return {tag:"لغز الوقت", q:`تشير الساعة الآن إلى <b class="ltr">${tm(h,m)}</b>. كم ستكون الساعة ${back?"قبل":"بعد"} ${dur}؟${svg}`,
+            mode:"choices", choices:arr.map(x=>`<span class="ltr">${x}</span>`), correct:arr.indexOf(ans),
+            explain:`${tm(h,m)} ${back?"−":"+"} ${dur} = <b class="ltr">${ans}</b>`};
+  },
+};
+
+function buildLevel(n){
+  ensureSched(n);
+  const type = sched.types[n], occ = sched.occ[n];
+  const r = RNG(hashStr("lvl" + n));
+  const p = GEN[type](n, r, occ);
+  p.type = type; p.n = n;
+  return p;
+}
+
+/* ---------------- audio / haptics ---------------- */
+let AC;
+function tone(freq, dur=.12, type="sine", vol=.07, delay=0){
+  if (!S.sound) return;
+  try {
+    AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+    const t = AC.currentTime + delay, o = AC.createOscillator(), g = AC.createGain();
+    o.type = type; o.frequency.setValueAtTime(freq, t);
+    g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(vol, t+.012); g.gain.exponentialRampToValueAtTime(.0001, t+dur);
+    o.connect(g).connect(AC.destination); o.start(t); o.stop(t+dur+.03);
+  } catch(e) {}
+}
+const SFX = {
+  tap(){ tone(660,.06,"triangle",.05); },
+  back(){ tone(420,.06,"triangle",.045); },
+  wrong(){ tone(180,.22,"sawtooth",.05); tone(140,.25,"sawtooth",.045,.08); vibe([40,40,60]); },
+  right(){ [523,659,784,1047].forEach((f,i)=>tone(f,.18,"triangle",.07,i*.08)); },
+  coin(){ tone(988,.07,"square",.035); tone(1319,.12,"square",.035,.07); },
+  hint(){ tone(880,.1,"sine",.06); tone(1175,.14,"sine",.05,.08); },
+};
+function vibe(p){ if (S.vibe && navigator.vibrate) try { navigator.vibrate(p); } catch(e) {} }
+
+/* ---------------- UI helpers ---------------- */
+function toast(msg){
+  const t = $("#toast"); t.innerHTML = D(msg); t.classList.add("show");
+  clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("show"), 2200);
+}
+function setCoins(bump){
+  $$(".coins b").forEach(b => b.textContent = D(S.coins));
+  if (bump) $$(".coins").forEach(c => { c.classList.remove("bump"); void c.offsetWidth; c.classList.add("bump"); });
+}
+function applyAccent(n){
+  const h = CHAPTER_HUES[chapterOf(n) % CHAPTER_HUES.length];
+  document.documentElement.style.setProperty("--accent", `hsl(${h} 85% 58%)`);
+  document.documentElement.style.setProperty("--accent2", `hsl(${h} 95% 74%)`);
+}
+function show(id){
+  $$(".screen").forEach(s => s.classList.toggle("active", s.id === id));
+  if (id === "home") renderHome();
+  if (id === "map") renderMap();
+  if (id !== "game") stopTimer();
+  window.scrollTo(0,0);
+}
+const totalStars = () => Object.values(S.stars).reduce((a,b)=>a+b,0);
+
+/* ---------------- HOME ---------------- */
+function renderHome(){
+  const n = S.max, c = chapterOf(n), inChap = (n-1) % PER_CHAPTER;
+  applyAccent(n);
+  $("#hChapter").textContent = `الفصل ${D(c+1)}: ${chapterName(c)}`;
+  $("#hLevel").textContent = D(`المرحلة ${n}`);
+  $("#hBar").style.width = (inChap / PER_CHAPTER * 100) + "%";
+  $("#hChapProg").textContent = D(`${inChap} / ${PER_CHAPTER} في هذا الفصل`);
+  $("#hStars").textContent = D(`⭐ ${totalStars()}`);
+  $("#playLabel").textContent = S.solved ? D(`تابع — المرحلة ${n}`) : "ابدأ اللعب";
+  $("#hStreak").textContent = D(S.streak); $("#hBest").textContent = D(S.best);
+  setCoins();
+}
+
+/* ---------------- MAP ---------------- */
+let mapChap = 0;
+function renderMap(keep){
+  if (!keep) mapChap = chapterOf(S.max);
+  applyAccent(mapChap * PER_CHAPTER + 1);
+  $("#mChapter").textContent = chapterName(mapChap);
+  const from = mapChap * PER_CHAPTER + 1, to = from + PER_CHAPTER - 1;
+  let got = 0;
+  for (let i = from; i <= to; i++) got += S.stars[i] || 0;
+  $("#mChapSub").textContent = D(`الفصل ${mapChap+1} · المراحل ${from}–${to} · ⭐ ${got}/${PER_CHAPTER*3}`);
+  const box = $("#levels"); box.innerHTML = "";
+  for (let i = from; i <= to; i++){
+    const b = document.createElement("button");
+    const st = S.stars[i], locked = i > S.max;
+    b.className = "lv" + (locked ? " locked" : i === S.max ? " current" : st !== undefined ? " done" : "");
+    b.innerHTML = `${D(i)}<small>${st !== undefined ? "★".repeat(st) + "☆".repeat(3-st) : ""}</small>`;
+    b.setAttribute("aria-label", `المرحلة ${i}${locked?" مقفلة":""}`);
+    b.onclick = () => { if (locked){ SFX.wrong(); toast("أكمل المراحل السابقة أولاً 🔒"); return; } SFX.tap(); startLevel(i); };
+    box.appendChild(b);
+  }
+  $("#chapPrev").disabled = mapChap === 0;
+  $("#chapPrev").style.opacity = mapChap === 0 ? .35 : 1;
+  const nextLocked = (mapChap+1) * PER_CHAPTER + 1 > S.max;
+  $("#chapNext").style.opacity = nextLocked ? .35 : 1;
+  $("#chapReward").innerHTML = D(`🎁 أكمل الفصل لتربح <b style="color:var(--gold2)">50</b> عملة إضافية وتفتح فصلاً جديداً من رحلة الرافدين — المراحل لا تنتهي!`);
+  setCoins();
+}
+$("#chapPrev").onclick = () => { if (mapChap > 0){ mapChap--; SFX.tap(); renderMap(true); } };
+$("#chapNext").onclick = () => {
+  if ((mapChap+1) * PER_CHAPTER + 1 > S.max){ SFX.wrong(); toast("هذا الفصل مقفل حالياً 🔒"); return; }
+  mapChap++; SFX.tap(); renderMap(true);
+};
+
+/* ---------------- GAME ---------------- */
+let G = null, timerId = null;
+const COST = {remove:20, reveal:30, half:20, skip:60};
+function stopTimer(){ clearInterval(timerId); timerId = null; }
+
+function startLevel(n){
+  G = {p: buildLevel(n), n, mistakes:0, hints:0, t0:Date.now(), done:false, slots:[], locked:new Set(), removed:false};
+  S.played++; save();
+  applyAccent(n);
+  $("#gLevel").textContent = D(`المرحلة ${n}`);
+  $("#gChapter").textContent = `${chapterName(chapterOf(n))}`;
+  $("#gProg").style.width = (((n-1) % PER_CHAPTER + 1) / PER_CHAPTER * 100) + "%";
+  $("#gTag").textContent = G.p.tag;
+  $("#gQ").innerHTML = D(G.p.q);
+  $("#gMist").textContent = D(0); $("#gTime").textContent = D(0);
+  renderArea(); renderHints(); setCoins();
+  show("game");
+  stopTimer();
+  timerId = setInterval(() => { if (!G.done) $("#gTime").textContent = D(Math.floor((Date.now()-G.t0)/1000)); }, 1000);
+}
+
+function renderArea(){
+  const area = $("#gArea"), p = G.p;
+  area.innerHTML = "";
+  if (p.mode === "tiles"){
+    const L = letters(p.answer);
+    G.slots = L.map(() => null);
+    const slots = document.createElement("div"); slots.className = "slots"; slots.id = "slots";
+    L.forEach((_, i) => {
+      const s = document.createElement("button"); s.className = "slot"; s.dataset.i = i;
+      s.setAttribute("aria-label", `الخانة ${i+1}`);
+      s.onclick = () => unplace(i);
+      slots.appendChild(s);
+    });
+    const tiles = document.createElement("div"); tiles.className = "tiles"; tiles.id = "tiles";
+    p.tiles.forEach((ch, i) => {
+      const t = document.createElement("button"); t.className = "tile"; t.textContent = ch; t.dataset.i = i;
+      t.onclick = () => place(i);
+      tiles.appendChild(t);
+    });
+    area.append(slots, tiles);
+  } else {
+    const box = document.createElement("div"); box.className = "choices"; box.id = "choices";
+    p.choices.forEach((c, i) => {
+      const b = document.createElement("button"); b.className = "choice"; b.innerHTML = D(c); b.dataset.i = i;
+      b.onclick = () => choose(i, b);
+      box.appendChild(b);
+    });
+    area.appendChild(box);
+  }
+}
+
+function renderHints(){
+  const h = $("#gHints"), p = G.p;
+  const items = p.mode === "tiles"
+    ? [["remove","🧹","حذف الزائد",COST.remove],["reveal","🔍","كشف حرف",COST.reveal],["skip","⏭️","تخطٍّ",COST.skip]]
+    : [["half","✂️","حذف إجابتين",COST.half],["skip","⏭️","تخطٍّ",COST.skip]];
+  h.innerHTML = items.map(([k,ic,label,cost]) =>
+    `<button class="hint-btn" data-hint="${k}"><span class="ic">${ic}</span>${label}<span class="cost"><span class="coin"></span>${D(cost)}</span></button>`).join("");
+  h.querySelectorAll("[data-hint]").forEach(b => b.onclick = () => useHint(b.dataset.hint));
+  refreshHints();
+}
+function refreshHints(){
+  $$("#gHints [data-hint]").forEach(b => {
+    const k = b.dataset.hint;
+    let off = G.done || S.coins < COST[k];
+    if (k === "remove") off = off || G.removed || !G.p.fillerCount;
+    if (k === "half") off = off || G.halved;
+    b.disabled = off;
+  });
+}
+function spend(k){
+  if (S.coins < COST[k]){ toast("لا تملك عملات كافية 🪙 — حُلّ مراحل أكثر لتربح"); SFX.wrong(); return false; }
+  S.coins -= COST[k]; S.hintsUsed++; G.hints++; save(); setCoins(true); SFX.hint(); return true;
+}
+function useHint(k){
+  if (G.done) return;
+  const p = G.p;
+  if (k === "skip"){
+    if (!confirmSkip()) return;
+    if (!spend(k)) return;
+    finish(true); return;
+  }
+  if (k === "remove"){
+    if (G.removed || !spend(k)) return;
+    G.removed = true;
+    const A = letters(p.answer);
+    // wrongly placed letters go back first
+    G.slots.forEach((ti, i) => { if (ti !== null && !G.locked.has(i) && p.tiles[ti] !== A[i]) unplace(i, true); });
+    // then hide filler tiles: keep exactly the multiset of answer letters
+    const need = {}; A.forEach(ch => need[ch] = (need[ch]||0) + 1);
+    G.slots.forEach(ti => { if (ti !== null) need[p.tiles[ti]]--; });
+    $$("#tiles .tile").forEach(t => {
+      if (t.classList.contains("used")) return;
+      const ch = p.tiles[+t.dataset.i];
+      if (need[ch] > 0) need[ch]--; else t.classList.add("gone");
+    });
+  }
+  if (k === "reveal"){
+    const A = letters(p.answer);
+    const i = A.findIndex((ch, idx) => !G.locked.has(idx) && p.tiles[G.slots[idx]] !== ch);
+    if (i < 0) return;
+    // find a tile with that letter: a free one, else one sitting in a wrong slot
+    const freeTile = p.tiles.findIndex((ch, j) => ch === A[i] && !G.slots.includes(j) && !$(`#tiles .tile[data-i="${j}"]`).classList.contains("gone"));
+    const si = freeTile < 0 ? G.slots.findIndex((tj, idx) => idx !== i && tj !== null && !G.locked.has(idx) && p.tiles[tj] === A[i]) : -1;
+    if (freeTile < 0 && si < 0) return;
+    if (!spend(k)) return;
+    if (G.slots[i] !== null) unplace(i, true);
+    let ti = freeTile;
+    if (ti < 0){ ti = G.slots[si]; unplace(si, true); }
+    G.slots[i] = ti; G.locked.add(i);
+    const tEl = $(`#tiles .tile[data-i="${ti}"]`); tEl.classList.add("used"); tEl.classList.remove("gone");
+    drawSlots(); checkTiles();
+  }
+  if (k === "half"){
+    if (G.halved || !spend(k)) return;
+    G.halved = true;
+    const wrong = $$("#choices .choice").filter(b => +b.dataset.i !== p.correct && !b.classList.contains("wrong"));
+    RNG(Date.now()).shuffle(wrong).slice(0, 2).forEach(b => b.classList.add("gone"));
+  }
+  refreshHints();
+}
+function confirmSkip(){
+  return window.confirm(D(`تخطّي هذه المرحلة مقابل ${COST.skip} عملة؟ لن تحصل على نجوم.`));
+}
+
+function place(ti){
+  if (G.done) return;
+  const i = G.slots.indexOf(null);
+  if (i < 0) return;
+  G.slots[i] = ti; SFX.tap();
+  $(`#tiles .tile[data-i="${ti}"]`).classList.add("used");
+  drawSlots(); checkTiles();
+}
+function unplace(i, silent){
+  if (G.done || G.slots[i] === null || G.locked.has(i)) return;
+  const ti = G.slots[i]; G.slots[i] = null;
+  $(`#tiles .tile[data-i="${ti}"]`).classList.remove("used");
+  if (!silent) SFX.back();
+  $("#slots").classList.remove("wrong");
+  drawSlots();
+}
+function drawSlots(){
+  $$("#slots .slot").forEach((s, i) => {
+    const ti = G.slots[i];
+    s.textContent = ti === null ? "" : G.p.tiles[ti];
+    s.className = "slot" + (ti !== null ? " filled" : "") + (G.locked.has(i) ? " locked" : "");
+  });
+}
+function checkTiles(){
+  if (G.slots.includes(null)) return;
+  const word = G.slots.map(ti => G.p.tiles[ti]).join("");
+  const box = $("#slots");
+  if (word === G.p.answer){ box.classList.add("right"); finish(false); }
+  else {
+    G.mistakes++; $("#gMist").textContent = D(G.mistakes);
+    box.classList.add("wrong"); box.classList.remove("shake"); void box.offsetWidth; box.classList.add("shake");
+    SFX.wrong(); toast("ليست الإجابة الصحيحة… جرّب ترتيباً آخر");
+  }
+}
+function choose(i, el){
+  if (G.done) return;
+  if (i === G.p.correct){ el.classList.add("right"); finish(false); }
+  else {
+    G.mistakes++; $("#gMist").textContent = D(G.mistakes);
+    el.classList.add("wrong","shake"); SFX.wrong();
+  }
+}
+
+function finish(skipped){
+  G.done = true; stopTimer(); refreshHints();
+  const n = G.n, secs = Math.floor((Date.now() - G.t0) / 1000);
+  const penalty = G.mistakes + G.hints;
+  const stars = skipped ? 0 : penalty === 0 ? 3 : penalty === 1 ? 2 : 1;
+  const prev = S.stars[n], firstClear = prev === undefined;
+  let coins = 0, bonusLines = [];
+  if (!skipped){
+    SFX.right();
+    if (firstClear){
+      coins = 5 + stars * 5;
+      if (secs <= 20){ coins += 5; bonusLines.push("⚡ سرعة +5"); }
+      S.solved++;
+      if (penalty === 0) S.firstTry++;
+    } else coins = stars > prev ? (stars - prev) * 5 : 2;
+    S.mistakes += G.mistakes;
+    if (G.mistakes === 0){ S.streak++; S.best = Math.max(S.best, S.streak); } else S.streak = 0;
+    if (S.streak && S.streak % 5 === 0){ coins += 10; bonusLines.push(`🔥 سلسلة ${S.streak} +10`); }
+  } else { S.streak = 0; if (firstClear) S.solved++; }
+  let chapterDone = false;
+  if (firstClear && n % PER_CHAPTER === 0){ coins += 50; chapterDone = true; }
+  S.stars[n] = Math.max(prev ?? 0, stars);
+  if (n >= S.max) S.max = n + 1;
+  S.coins += coins; save();
+  setTimeout(() => {
+    if (!skipped) confetti(chapterDone ? 220 : 110);
+    if (coins) { SFX.coin(); setCoins(true); }
+    winModal({n, stars, coins, secs, skipped, chapterDone, bonusLines});
+  }, skipped ? 50 : 650);
+}
+
+/* ---------------- MODALS ---------------- */
+const STAR_SVG = `<svg class="star" viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="#e8b94c" stroke="#fff3c4" stroke-width=".8"/></svg>`;
+function openModal(html, onOpen){
+  $("#sheet").innerHTML = html;
+  $("#modal").classList.add("open");
+  onOpen && onOpen();
+  const f = $("#sheet button"); f && f.focus({preventScroll:true});
+}
+function closeModal(){ $("#modal").classList.remove("open"); }
+$("#modal").addEventListener("click", e => { if (e.target.id === "modal" && !$("#sheet [data-lock]")) closeModal(); });
+
+function winModal({n, stars, coins, secs, skipped, chapterDone, bonusLines}){
+  const title = skipped ? "تم التخطّي" : PRAISE[Math.floor(Math.random()*PRAISE.length)];
+  openModal(D(`
+    <div data-lock></div>
+    <h3>${title}</h3>
+    <p class="muted" style="text-align:center;margin:0">المرحلة ${n} · ⏱ ${secs} ث · أخطاء ${G.mistakes}</p>
+    <div class="stars">${STAR_SVG}${STAR_SVG}${STAR_SVG}</div>
+    ${coins ? `<div class="reward"><span class="coin"></span>+${coins}</div>` : ""}
+    ${bonusLines.length ? `<p class="muted" style="text-align:center;margin:-6px 0 10px">${bonusLines.join(" · ")}</p>` : ""}
+    ${chapterDone ? `<div class="banner">🏛️ أكملت فصل «${chapterName(chapterOf(n))}» +50 عملة!<br>الفصل التالي: «${chapterName(chapterOf(n)+1)}»</div>` : ""}
+    <div class="solution">${G.p.explain}</div>
+    <div class="btns">
+      <button class="btn btn-primary" id="nextBtn">المرحلة التالية ←</button>
+      <button class="btn btn-ghost" id="toMap">🗺️ المراحل</button>
+    </div>`), () => {
+      const st = $$("#sheet .star");
+      st.forEach((s, i) => setTimeout(() => { if (i < stars){ s.classList.add("on"); tone(700+i*180,.12,"triangle",.06); } }, 250 + i*260));
+      $("#nextBtn").onclick = () => { closeModal(); startLevel(n + 1); };
+      $("#toMap").onclick = () => { closeModal(); show("map"); };
+    });
+}
+function statsModal(){
+  const acc = S.solved ? Math.round(S.firstTry / S.solved * 100) : 0;
+  openModal(D(`
+    <h3>📊 إحصائياتي</h3>
+    <div class="stat-grid">
+      <div class="stat"><b>${S.solved}</b><span>مرحلة محلولة</span></div>
+      <div class="stat"><b>${totalStars()}</b><span>نجمة</span></div>
+      <div class="stat"><b>${S.max}</b><span>أعلى مرحلة</span></div>
+      <div class="stat"><b>${chapterOf(S.max)+1}</b><span>الفصل الحالي</span></div>
+      <div class="stat"><b>${acc}%</b><span>حلّ من أول محاولة</span></div>
+      <div class="stat"><b>${S.best}</b><span>أطول سلسلة</span></div>
+      <div class="stat"><b>${S.hintsUsed}</b><span>تلميح مستخدم</span></div>
+      <div class="stat"><b>${S.coins}</b><span>عملة</span></div>
+    </div>
+    <div class="btns"><button class="btn btn-ghost" onclick="closeModal()">إغلاق</button></div>`));
+}
+function howtoModal(){
+  openModal(D(`
+    <h3>💡 طريقة اللعب</h3>
+    <ul class="howto">
+      <li><b>ألغاز الكلمات:</b> اضغط على الحروف بالترتيب لتكوين الجواب. اضغط على الخانة لإرجاع الحرف.</li>
+      <li><b>الاختيارات:</b> في المتتاليات والمعادلات والمنطق اختر الجواب الصحيح من أربعة.</li>
+      <li><b>النجوم:</b> ٣ نجوم بلا أخطاء ولا تلميحات، نجمتان مع خطأ واحد، ونجمة واحدة لما بعد ذلك.</li>
+      <li><b>العملات:</b> تربحها مع كل مرحلة، وبالسرعة، وبسلاسل الحلّ الصحيح، وبإكمال الفصول، وبمكافأة يومية.</li>
+      <li><b>التلميحات:</b> حذف الحروف الزائدة، كشف حرف، حذف إجابتين، أو تخطّي المرحلة.</li>
+      <li><b>مراحل لا تنتهي:</b> كل ٢٠ مرحلة فصل جديد من رحلة بلاد الرافدين، والصعوبة تزداد تدريجياً بلا نهاية.</li>
+      <li><b>لوحة المفاتيح:</b> اكتب الحروف مباشرة، و⌫ للحذف، والأرقام 1–4 للاختيارات.</li>
+    </ul>
+    <div class="btns"><button class="btn btn-primary" onclick="closeModal()">فهمت، لنلعب!</button></div>`));
+}
+function settingsModal(){
+  const sw = (id, on) => `<button class="switch" role="switch" id="${id}" aria-checked="${on}"></button>`;
+  openModal(`
+    <h3>⚙️ الإعدادات</h3>
+    <div class="set-row"><span>🔊 الأصوات</span>${sw("sSound", S.sound)}</div>
+    <div class="set-row"><span>📳 الاهتزاز</span>${sw("sVibe", S.vibe)}</div>
+    <div class="set-row"><span>🔢 شكل الأرقام</span><div class="seg"><button data-dg="east" class="${S.digits==="east"?"on":""}">١٢٣</button><button data-dg="west" class="${S.digits==="west"?"on":""}">123</button></div></div>
+    <div class="set-row"><span class="danger">🗑️ إعادة التقدّم من البداية</span><button class="btn btn-ghost" style="width:auto;padding:8px 14px;font-size:.9rem" id="sReset">إعادة</button></div>
+    <div class="btns" style="margin-top:16px"><button class="btn btn-primary" onclick="closeModal()">حفظ</button></div>`, () => {
+      $("#sSound").onclick = e => { S.sound = !S.sound; e.currentTarget.setAttribute("aria-checked", S.sound); save(); SFX.tap(); };
+      $("#sVibe").onclick = e => { S.vibe = !S.vibe; e.currentTarget.setAttribute("aria-checked", S.vibe); save(); vibe(30); };
+      $$("[data-dg]").forEach(b => b.onclick = () => { S.digits = b.dataset.dg; save(); $$("[data-dg]").forEach(x => x.classList.toggle("on", x === b)); renderHome(); });
+      $("#sReset").onclick = () => {
+        if (!window.confirm("هل أنت متأكد؟ سيُحذف كل تقدّمك ونجومك وعملاتك.")) return;
+        const keep = {sound:S.sound, vibe:S.vibe, digits:S.digits, daily:S.daily};
+        S = Object.assign({}, DEFAULT, keep, {stars:{}}); save(); closeModal(); show("home"); toast("تمت إعادة التقدّم");
+      };
+    });
+}
+window.closeModal = closeModal;
+
+/* ---------------- confetti ---------------- */
+const fx = $("#fx"), ctx = fx.getContext("2d");
+let parts = [], raf = null;
+function sizeFx(){ fx.width = innerWidth * devicePixelRatio; fx.height = innerHeight * devicePixelRatio; }
+addEventListener("resize", sizeFx); sizeFx();
+function confetti(count){
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const cols = ["#e8b94c","#f8dd8a","#5d86ff","#2fca7a","#ff6b8b","#ffffff"];
+  for (let i = 0; i < count; i++) parts.push({x:innerWidth/2 + (Math.random()-.5)*80, y:innerHeight*.42, vx:(Math.random()-.5)*14, vy:-Math.random()*14-4, s:Math.random()*7+4, c:cols[i%cols.length], r:Math.random()*6, vr:(Math.random()-.5)*.3, life:0});
+  if (!raf) loop();
+}
+function loop(){
+  ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+  ctx.clearRect(0,0,innerWidth,innerHeight);
+  parts = parts.filter(p => p.life < 160 && p.y < innerHeight + 40);
+  for (const p of parts){
+    p.life++; p.vy += .35; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+    ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r); ctx.globalAlpha = Math.max(0, 1 - p.life/160);
+    ctx.fillStyle = p.c; ctx.fillRect(-p.s/2, -p.s/4, p.s, p.s/2); ctx.restore();
+  }
+  raf = parts.length ? requestAnimationFrame(loop) : (ctx.clearRect(0,0,innerWidth,innerHeight), null);
+}
+
+/* ---------------- wiring ---------------- */
+$$("[data-go]").forEach(b => b.onclick = () => { SFX.tap(); show(b.dataset.go); });
+$$("[data-open]").forEach(b => b.onclick = () => { SFX.tap(); ({stats:statsModal, howto:howtoModal, settings:settingsModal})[b.dataset.open](); });
+$("#playBtn").onclick = () => { SFX.tap(); if (!S.solved && !S.played) howtoModal(); startLevel(S.max); };
+$("#gBack").onclick = () => { SFX.back(); show("map"); };
+
+document.addEventListener("keydown", e => {
+  if ($("#modal").classList.contains("open")){
+    if (e.key === "Escape" && !$("#sheet [data-lock]")) closeModal();
+    return;
+  }
+  if (!$("#game").classList.contains("active") || !G || G.done) return;
+  if (G.p.mode === "choices"){
+    const k = "1234".indexOf(e.key) >= 0 ? +e.key : "١٢٣٤".indexOf(e.key) + 1;
+    if (k >= 1 && k <= 4){ const b = $(`#choices .choice[data-i="${k-1}"]`); if (b && !b.classList.contains("gone") && !b.classList.contains("wrong")) choose(k-1, b); }
+    return;
+  }
+  if (e.key === "Backspace"){
+    e.preventDefault();
+    for (let i = G.slots.length - 1; i >= 0; i--) if (G.slots[i] !== null && !G.locked.has(i)){ unplace(i); break; }
+    return;
+  }
+  const norm = {"إ":"ا","آ":"ا"};
+  if (e.key.length === 1){
+    const ch = e.key;
+    let ti = G.p.tiles.findIndex((t, j) => t === ch && !G.slots.includes(j) && !$(`#tiles .tile[data-i="${j}"]`).classList.contains("gone"));
+    if (ti < 0 && norm[ch]) ti = G.p.tiles.findIndex((t, j) => t === norm[ch] && !G.slots.includes(j));
+    if (ti >= 0) place(ti);
+  }
+});
+
+/* daily reward */
+(function daily(){
+  const today = new Date().toISOString().slice(0,10);
+  if (S.daily !== today){
+    const first = !S.daily;
+    S.daily = today;
+    if (!first){ S.coins += 25; setTimeout(() => { toast("🎁 مكافأة يومية: +25 عملة"); SFX.coin(); setCoins(true); }, 600); }
+    save();
+  }
+})();
+
+renderHome();
+</script>
+</body>
+</html>
