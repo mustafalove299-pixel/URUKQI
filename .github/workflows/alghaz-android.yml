@@ -1,0 +1,75 @@
+# Builds the «ألغاز أوروك» Android app (APK) from games/alghaz and publishes it
+# as a GitHub Release asset, so it can be downloaded straight to a phone.
+name: Alghaz Android APK
+
+on:
+  push:
+    paths:
+      - "games/alghaz/**"
+      - "mobile/alghaz/**"
+      - ".github/workflows/alghaz-android.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed to publish the APK on the release page
+
+concurrency:
+  group: alghaz-android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile/alghaz
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install Capacitor
+        run: npm install --no-audit --no-fund
+
+      - name: Generate Android project, icons and splash
+        run: npm run build:android
+
+      - name: Lock to portrait and stamp the version
+        run: |
+          sed -i 's/<activity/<activity android:screenOrientation="portrait"/' android/app/src/main/AndroidManifest.xml
+          sed -i 's/versionCode 1$/versionCode ${{ github.run_number }}/; s/versionName "1.0"/versionName "1.0.${{ github.run_number }}"/' android/app/build.gradle
+          grep -n 'screenOrientation' android/app/src/main/AndroidManifest.xml
+          grep -nE 'versionCode|versionName' android/app/build.gradle
+
+      - name: Build APK
+        working-directory: mobile/alghaz/android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/app-debug.apk "$GITHUB_WORKSPACE/alghaz-urukqi.apk"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: alghaz-urukqi-apk
+          path: alghaz-urukqi.apk
+
+      - name: Publish on the release page
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: alghaz-android-latest
+          name: "ألغاز أوروك — تطبيق أندرويد"
+          target_commitish: ${{ github.sha }}
+          prerelease: true
+          make_latest: false
+          body: |
+            حمّل ملف `alghaz-urukqi.apk` من الأسفل وثبّته على هاتف أندرويد.
+            Build ${{ github.run_number }} · commit ${{ github.sha }}
+          files: alghaz-urukqi.apk

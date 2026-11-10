@@ -1,0 +1,18 @@
+{
+  "name": "alghaz-urukqi-app",
+  "private": true,
+  "version": "1.0.0",
+  "description": "ألغاز أوروك — Android app wrapper (Capacitor) around games/alghaz",
+  "scripts": {
+    "prepare-www": "node scripts/prepare-www.js",
+    "build:android": "npm run prepare-www && (test -d android || npx cap add android) && npx capacitor-assets generate --android --iconBackgroundColor '#060b18' --splashBackgroundColor '#060b18' && npx cap sync android"
+  },
+  "dependencies": {
+    "@capacitor/android": "6.2.3",
+    "@capacitor/core": "6.2.3"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "3.0.5",
+    "@capacitor/cli": "6.2.3"
+  }
+}

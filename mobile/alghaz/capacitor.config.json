@@ -1,0 +1,9 @@
+{
+  "appId": "com.urukqi.alghaz",
+  "appName": "ألغاز أوروك",
+  "webDir": "www",
+  "backgroundColor": "#060b18",
+  "android": {
+    "backgroundColor": "#060b18"
+  }
+}
