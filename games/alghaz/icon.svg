@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="70%"><stop offset="0" stop-color="#1c3170"/><stop offset="1" stop-color="#060b18"/></radialGradient>
+    <linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1bf"/><stop offset=".55" stop-color="#e8b94c"/><stop offset="1" stop-color="#a6741b"/></linearGradient>
+    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5d86ff"/><stop offset="1" stop-color="#1d3fae"/></linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <g transform="translate(76 70) scale(3)">
+    <path d="M60 4l12 28 30-6-14 27 26 17-30 8 3 30-27-16-27 16 3-30-30-8 26-17-14-27 30 6z" fill="url(#lg)" stroke="url(#gg)" stroke-width="3" stroke-linejoin="round"/>
+    <circle cx="60" cy="62" r="25" fill="#0b1636" stroke="url(#gg)" stroke-width="3"/>
+    <path d="M52 52a8 8 0 1 1 11 7.4c-2 .9-3 2.6-3 4.6v3" fill="none" stroke="url(#gg)" stroke-width="5" stroke-linecap="round" transform="translate(120 0) scale(-1 1)"/>
+    <circle cx="60" cy="76" r="3.2" fill="url(#gg)"/>
+  </g>
+</svg>
