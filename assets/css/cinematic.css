@@ -398,6 +398,11 @@ h1, h2, h3, h4 { font-family: inherit; letter-spacing: 0; }
 .product-feature-body h3 { margin: 4px 0 0; font-size: 22px; font-weight: 800; color: #fff; }
 .product-feature-body p { margin: 0 0 8px; color: var(--muted); font-size: 15px; }
 .product-feature-body .hero-actions { margin-top: auto; }
+.product-feature-body .product-subtitle { display: block; margin-top: 2px; font-size: 14px; font-weight: 700; color: var(--gold-hi); }
+.product-shot.is-art img { object-position: 0 50%; }
+/* Three products: one row on wide screens; on mid widths an odd last card spans the row. */
+@media (min-width: 1041px) { .product-features:has(> :nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 761px) and (max-width: 1040px) { .product-features > .product-feature:last-child:nth-child(odd) { grid-column: 1 / -1; } }
 .custom-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .custom-card { display: grid; grid-template-columns: 42% minmax(0, 1fr); overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); color: #fff; text-decoration: none; background: var(--panel); transition: border-color .25s, transform .3s var(--ease); }
 .custom-card-art { overflow: hidden; }

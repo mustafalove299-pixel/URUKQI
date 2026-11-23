@@ -48,7 +48,7 @@
     (function () {
       var moved = { provide: "automation/", problems: "automation/", demo: "automation/", workflow: "automation/",
         "automation-services": "automation/", plans: "automation/",
-        "urukqi-trade": "trade/", "trade-china-import": "trade/", "trade-migration": "trade/",
+        "urukqi-trade": "trade/", "trade-china-import": "import/", "trade-migration": "trade/",
         request: "contact/", contact: "contact/" };
       var id = location.hash.slice(1);
       if (moved[id]) location.replace(moved[id] + location.search + "#" + id);
@@ -221,7 +221,7 @@
       <div class="container">
         <div class="discover-grid">
           <a class="discover-card" href="solutions/" data-reveal><img src="assets/art/svc-systems-560.webp" width="560" height="315" alt="" loading="lazy" decoding="async"><span><strong>حلول الأعمال</strong><small>أنظمة مخصصة وحلول متكاملة لتحديات أعمالك.</small><i class="round-arrow"><svg class="ico ico-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></i></span></a>
-          <a class="discover-card" href="products/" data-reveal><img src="assets/art/svc-products-560.webp" width="560" height="315" alt="" loading="lazy" decoding="async"><span><strong>المنتجات</strong><small>منتجات URUKQI بحالتها الفعلية: تجريبي، قيد التطوير.</small><i class="round-arrow"><svg class="ico ico-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></i></span></a>
+          <a class="discover-card" href="products/" data-reveal><img src="assets/art/svc-products-560.webp" width="560" height="315" alt="" loading="lazy" decoding="async"><span><strong>المنتجات</strong><small>منتجات URUKQI بحالتها الفعلية: تجريبي، وطرح تجاري قريب.</small><i class="round-arrow"><svg class="ico ico-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></i></span></a>
           <a class="discover-card" href="sectors/" data-reveal><img src="assets/art/svc-sectors-560.webp" width="560" height="315" alt="" loading="lazy" decoding="async"><span><strong>القطاعات</strong><small>صفحة حلول لكل قطاع: تجارة، صحة، تعليم، مقاولات وغيرها.</small><i class="round-arrow"><svg class="ico ico-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></i></span></a>
           <a class="discover-card" href="solutions/#journey" data-reveal><img src="assets/art/svc-journey-560.webp" width="560" height="315" alt="" loading="lazy" decoding="async"><span><strong>منهجيتنا</strong><small>من الفكرة إلى التنفيذ بست مراحل واضحة ومرنة.</small><i class="round-arrow"><svg class="ico ico-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></i></span></a>
         </div>
@@ -620,14 +620,26 @@
         <div class="product-features">
 <!-- build:product-cards -->
 <article class="product-feature" data-reveal>
-          <figure class="product-shot "><img src="assets/urukqi-trade-dashboard.webp" width="1672" height="941" alt="واجهة URUKQI Trade — النسخة قيد التطوير" loading="lazy" decoding="async"><figcaption>واجهة URUKQI Trade — النسخة قيد التطوير</figcaption></figure>
+          <figure class="product-shot "><img src="assets/art/svc-desktop-560.webp" width="960" height="540" alt="صورة تعبيرية لبرنامج إدارة التجارة على جهاز مكتبي" loading="lazy" decoding="async"><figcaption>صورة تعبيرية — ليست لقطة من البرنامج</figcaption></figure>
           <div class="product-feature-body">
-            <span class="product-status is-soon">قيد التطوير · قريبًا</span>
-            <h3 dir="auto">URUKQI Trade</h3>
-            <p>برنامج Windows لإدارة التجارة: المبيعات والمخزون والديون والمصروفات والأرباح واستيراد البضاعة من الصين. شراء مرة واحدة، وتُعلن الأسعار عند الإطلاق.</p>
+            <span class="product-status is-soon">الطرح التجاري قريبًا</span>
+            <h3 dir="auto">URUKQI Trade<small class="product-subtitle">أوروك لإدارة التجارة</small></h3>
+            <p>برنامج Windows لإدارة أعمال التجارة اليومية: المبيعات والمشتريات والمخزون والعملاء والموردون والديون والحسابات والتقارير من مكان واحد. شراء مرة واحدة، وتُعلن الأسعار عند الإطلاق.</p>
             <div class="hero-actions">
               <a class="btn btn-primary btn-sm" href="trade/">اكتشف البرنامج <svg class="ico ico-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></a>
               <a class="btn btn-secondary btn-sm" href="contact/?sector=retail#request">اسأل عنه</a>
+            </div>
+          </div>
+        </article>
+<article class="product-feature" data-reveal>
+          <figure class="product-shot is-art"><img src="assets/art/globe-1000.webp" width="1000" height="500" alt="صورة تعبيرية لخطوط التجارة بين الصين والعراق على الكرة الأرضية" loading="lazy" decoding="async"><figcaption>صورة تعبيرية — ليست لقطة من البرنامج</figcaption></figure>
+          <div class="product-feature-body">
+            <span class="product-status is-soon">الطرح التجاري قريبًا</span>
+            <h3 dir="auto">URUKQI Import<small class="product-subtitle">أوروك لإدارة استيرادات الصين</small></h3>
+            <p>برنامج Windows مستقل لتنظيم استيرادات الصين: طلبات الاستيراد والموردون والشحن والمصاريف، وحساب التكلفة النهائية لكل صنف حتى وصول البضاعة. برنامج منفصل عن URUKQI Trade.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary btn-sm" href="import/">اكتشف البرنامج <svg class="ico ico-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></a>
+              <a class="btn btn-secondary btn-sm" href="contact/?need=desktop#request">اسأل عنه</a>
             </div>
           </div>
         </article>
@@ -790,10 +802,10 @@
           <details><summary>لدي برنامج مخزون، هل يمكن ربطه؟</summary><p>قد يكون ذلك ممكنًا حسب البرنامج وطريقة الربط التي يوفرها، ويُحسم بعد الفحص.</p></details>
           <details><summary>كم يستغرق التنفيذ؟</summary><p>أنظمة الأتمتة القياسية المؤهلة عادة حتى 5 أيام عمل بعد اكتمال المتطلبات. أما الأنظمة والبرامج المخصصة وERP والمواقع والتطبيقات وأنظمة القطاعات فتُحدد مدتها في العرض بعد تحليل المتطلبات.</p></details>
           <details><summary>هل يجب تغيير البرنامج الذي أستخدمه؟</summary><p>ليس بالضرورة. نبدأ بفهم الأدوات الحالية ونبحث أولًا عن إمكانات الربط والتكامل.</p></details>
-          <details><summary>هل الحل جاهز أم مخصص؟</summary><p>لدينا منتجات محددة (Smart Customer Service System V1 كنسخة تجريبية، وURUKQI Trade قيد التطوير)، وبقية الحلول تُبنى أو تُخصص حسب العملية الفعلية لكل نشاط.</p></details>
+          <details><summary>هل الحل جاهز أم مخصص؟</summary><p>لدينا منتجات محددة (Smart Customer Service System V1 كنسخة تجريبية، وبرنامجان مستقلان طرحهما التجاري قريب: URUKQI Trade لإدارة التجارة، وURUKQI Import لإدارة استيرادات الصين)، وبقية الحلول تُبنى أو تُخصص حسب العملية الفعلية لكل نشاط.</p></details>
           <details><summary>هل تبنون مواقع وتطبيقات أيضًا؟</summary><p>نعم. نبني المواقع وأنظمة الويب والتطبيقات وبرامج Windows، ونفضّل ربطها بنظام عملك الفعلي بدل أن تكون صفحات منفصلة.</p></details>
           <details><summary>نشاطي غير موجود في القائمة، هل يمكن بناء نظام له؟</summary><p>القائمة أمثلة. أخبرنا كيف يعمل نشاطك عبر نموذج «اطلب نظامك»، وسندرس الحاجة ونقترح الحل المناسب.</p></details>
-          <details><summary>هل الدفع مرة واحدة أم اشتراك؟</summary><p>خدمات الأتمتة وخدمة العملاء الذكية مصممة كنموذج اشتراك يشمل التشغيل والمراقبة والدعم والتطوير بحسب الباقة. URUKQI Trade بشراء مرة واحدة عند إطلاقه. أما الأنظمة المخصصة فيُحدد نموذج تسعيرها في العرض بعد دراسة المتطلبات.</p></details>
+          <details><summary>هل الدفع مرة واحدة أم اشتراك؟</summary><p>خدمات الأتمتة وخدمة العملاء الذكية مصممة كنموذج اشتراك يشمل التشغيل والمراقبة والدعم والتطوير بحسب الباقة. URUKQI Trade وURUKQI Import كلٌّ منهما برنامج مستقل بشراء مرة واحدة عند إطلاقه. أما الأنظمة المخصصة فيُحدد نموذج تسعيرها في العرض بعد دراسة المتطلبات.</p></details>
           <details><summary>هل تناسب الشركات الكبيرة؟</summary><p>نعم، ويمكن بناء مسارات متعددة وتكاملات مخصصة عند الحاجة.</p></details>
         </div>
       </div>

@@ -708,26 +708,40 @@ ${closingBand(base, {})}`;
 const STATUS_KEY = [
   { kind: "live", label: "متاح", text: "جاهز للشراء أو التشغيل الآن." },
   { kind: "demo", label: "نسخة تجريبية", text: "يمكن عرضه وتجربته، والتشغيل الفعلي يُحدد بعد الفحص." },
-  { kind: "soon", label: "قيد التطوير", text: "يُبنى الآن، ويُعلن عنه وعن سعره عند الإطلاق." },
+  { kind: "soon", label: "الطرح التجاري قريبًا", text: "في مراحله الأخيرة قبل الطرح التجاري؛ الاستفسار عن الشراء متاح الآن، والتسليم والسعر يُعلنان عند الطرح." },
   { kind: "custom", label: "يُبنى حسب الطلب", text: "ليس برنامجًا جاهزًا؛ نبنيه أو نخصصه بعد دراسة عملك." }
 ];
 
 const PRODUCT_ART = {
   "smart-customer-service": { src: "assets/demo-distribution.webp", w: 780, h: 1688, alt: "شاشة عرض توضيحية لمنظومة خدمة العملاء عبر WhatsApp", cap: "شاشة عرض توضيحية من النسخة التجريبية", fit: "is-phone" },
-  "urukqi-trade": { src: "assets/urukqi-trade-dashboard.webp", w: 1672, h: 941, alt: "واجهة URUKQI Trade — النسخة قيد التطوير", cap: "واجهة URUKQI Trade — النسخة قيد التطوير", fit: "" }
+  // The former Trade mockups showed a «استيراد الصين» module inside Trade, so they are no longer
+  // published. Illustrative artwork is used until owner-approved Trade screenshots exist.
+  "urukqi-trade": { src: "assets/art/svc-desktop-560.webp", w: 960, h: 540, alt: "صورة تعبيرية لبرنامج إدارة التجارة على جهاز مكتبي", cap: "صورة تعبيرية — ليست لقطة من البرنامج", fit: "" },
+  // Illustrative brand artwork, deliberately NOT a program screenshot (no screenshots are
+  // published for URUKQI Import until the owner approves a public release and its images).
+  "urukqi-import": { src: "assets/art/globe-1000.webp", w: 1000, h: 500, alt: "صورة تعبيرية لخطوط التجارة بين الصين والعراق على الكرة الأرضية", cap: "صورة تعبيرية — ليست لقطة من البرنامج", fit: "is-art" }
+};
+
+// Where each product's «اسأل عنه» button points (prefills the request form).
+const PRODUCT_REQUEST = {
+  "urukqi-trade": { sector: "retail" },
+  "urukqi-import": { need: "desktop" },
+  "smart-customer-service": { need: "automation" }
 };
 
 function productFeature(base, p) {
   const a = PRODUCT_ART[p.id];
+  const ask = PRODUCT_REQUEST[p.id];
+  if (!a || !ask) throw new Error(`product ${p.id} needs PRODUCT_ART and PRODUCT_REQUEST entries`);
   return `<article class="product-feature" data-reveal>
           <figure class="product-shot ${a.fit}"><img src="${base}${a.src}" width="${a.w}" height="${a.h}" alt="${esc(a.alt)}" loading="lazy" decoding="async"><figcaption>${esc(a.cap)}</figcaption></figure>
           <div class="product-feature-body">
             <span class="product-status is-${p.statusKind}">${esc(p.status)}</span>
-            <h3 dir="auto">${esc(p.name)}</h3>
+            <h3 dir="auto">${esc(p.name)}${p.subtitle ? `<small class="product-subtitle">${esc(p.subtitle)}</small>` : ""}</h3>
             <p>${esc(p.desc)}</p>
             <div class="hero-actions">
               <a class="btn btn-primary btn-sm" href="${base}${p.href}">${esc(p.linkText)} ${ARROW}</a>
-              <a class="btn btn-secondary btn-sm" href="${R.requestHref(base, p.id === "urukqi-trade" ? { sector: "retail" } : { need: "automation" })}">اسأل عنه</a>
+              <a class="btn btn-secondary btn-sm" href="${R.requestHref(base, ask)}">اسأل عنه</a>
             </div>
           </div>
         </article>`;
@@ -736,7 +750,6 @@ function productFeature(base, p) {
 function productsPage() {
   const base = "../";
   const counts = kind => (kind === "custom" ? "حسب الطلب" : String(catalog.products.filter(p => p.statusKind === kind).length));
-  const trade = catalog.products.find(p => p.id === "urukqi-trade");
   const featuredSectors = ["retail", "healthcare", "distribution", "business"].map(slug => idx.sectors[slug]);
   const customLines = SERVICE_PANELS.slice(0, 5).concat(SERVICE_PANELS[5]);
 
@@ -746,13 +759,10 @@ function productsPage() {
     crumbs: breadcrumbNav(base, [{ name: "الرئيسية", href: "index.html" }, { name: "المنتجات والقطاعات" }]),
     eyebrow: "المنتجات والقطاعات",
     titleHtml: `حلول ذكية لكل قطاع <span class="gold">تدير أعمالك للمستقبل.</span>`,
-    lead: "من منتجات URUKQI إلى الأنظمة التي نبنيها لقطاعك: نوضح بصراحة ما هو جاهز، وما هو قيد التطوير، وما يُبنى حسب طلبك.",
+    lead: "من منتجات URUKQI إلى الأنظمة التي نبنيها لقطاعك: نوضح بصراحة ما هو تجريبي، وما طرحه التجاري قريب، وما يُبنى حسب طلبك.",
     actions: `<a href="#products-list" class="btn btn-primary">استعرض المنتجات ${ARROW}</a>
           <a href="${WA}" target="_blank" rel="noopener" class="btn btn-secondary">${ico("whatsapp")} تحدث مع فريقنا</a>`,
-    side: `<figure class="hero-monitor">
-          <div class="monitor-screen"><img src="${base}assets/urukqi-trade-dashboard.webp" width="1672" height="941" alt="${esc(PRODUCT_ART["urukqi-trade"].alt)}" fetchpriority="high" decoding="async"></div>
-          <figcaption>${esc(trade.name)} — النسخة قيد التطوير</figcaption>
-        </figure>`
+    side: `<figure class="hero-emblem">${art(base, "svc-desktop", [960, 560], { sizes: "(max-width:760px) 92vw, 34vw", w: 960, h: 540, eager: true, alt: "صورة تعبيرية لبرنامج مكتبي من URUKQI" })}</figure>`
   })}
 
     <section class="section cine-section" id="products-list">
@@ -804,8 +814,8 @@ ${closingBand(base, {})}`;
   return page({
     base,
     urlPath: "products/",
-    title: "منتجات URUKQI والقطاعات — URUKQI Trade وخدمة العملاء الذكية | URUKQI",
-    description: "منتجات URUKQI بحالتها الفعلية: URUKQI Trade قيد التطوير، وSmart Customer Service كنسخة تجريبية، مع الأنظمة التي نبنيها حسب الطلب وقطاعات الأعمال في العراق.",
+    title: "منتجات URUKQI — URUKQI Trade وURUKQI Import وخدمة العملاء الذكية | URUKQI",
+    description: "منتجات URUKQI بحالتها الفعلية: URUKQI Trade لإدارة التجارة وURUKQI Import لإدارة استيرادات الصين، برنامجان مستقلان طرحهما التجاري قريب، وSmart Customer Service كنسخة تجريبية، مع الأنظمة التي نبنيها حسب الطلب.",
     breadcrumb: [{ name: "الرئيسية", path: "" }, { name: "المنتجات", path: "products/" }],
     body,
     active: "products"
@@ -970,14 +980,41 @@ ${closingBand(base, { sector: "retail" }, "تحتاج نظامًا مختلفً�
   return page({
     base,
     urlPath: "trade/",
-    title: "URUKQI Trade — برنامج إدارة التجارة والمخزون والديون (قيد التطوير) | URUKQI",
-    description: "URUKQI Trade برنامج Windows قيد التطوير لإدارة التجارة: المبيعات والفواتير، المخزون والجرد، ديون العملاء والموردين، المصروفات والأرباح، ومنظومة استيراد الصين. شراء مرة واحدة، والأسعار تُعلن عند الإطلاق.",
-    breadcrumb: [{ name: "الرئيسية", path: "" }, { name: "URUKQI Trade", path: "trade/" }],
+    title: "URUKQI Trade — برنامج إدارة التجارة والمبيعات والمخزون والديون | URUKQI",
+    description: "URUKQI Trade — أوروك لإدارة التجارة: برنامج Windows لإدارة أعمال التجارة اليومية: المبيعات والفواتير، المشتريات، المخزون والجرد، العملاء والموردون، الديون والصندوق، المصروفات والأرباح والتقارير. يعمل بدون إنترنت، بترخيص دائم. الطرح التجاري قريب.",
+    breadcrumb: [{ name: "الرئيسية", path: "" }, { name: "المنتجات", path: "products/" }, { name: "URUKQI Trade", path: "trade/" }],
     body,
     styles: ["trade.css"],
     active: "products",
     bodyClass: "legacy-sections",
     request: { sector: "retail" }
+  });
+}
+
+// URUKQI Import: a separate product page (not a part of URUKQI Trade).
+function importPage() {
+  const base = "../";
+  const body = `
+    <section class="page-crumbs">
+      <div class="container">
+        ${breadcrumbNav(base, [{ name: "الرئيسية", href: "index.html" }, { name: "المنتجات", href: "products/" }, { name: "URUKQI Import" }])}
+      </div>
+    </section>
+
+${partial("import.html", base)}
+${closingBand(base, { need: "desktop" }, "تحتاج نظامًا مختلفًا أو مخصصًا لطريقة عملك؟ أخبرنا وسندرس احتياجك.")}`;
+
+  return page({
+    base,
+    urlPath: "import/",
+    title: "URUKQI Import — برنامج إدارة استيرادات الصين وحساب تكلفة البضاعة | URUKQI",
+    description: "URUKQI Import — أوروك لإدارة استيرادات الصين: برنامج Windows مستقل لتنظيم طلبات الاستيراد والموردين والشحن والمصاريف وأسعار الصرف، وحساب التكلفة النهائية لكل صنف حتى وصول البضاعة. يعمل بدون إنترنت. الطرح التجاري قريب.",
+    breadcrumb: [{ name: "الرئيسية", path: "" }, { name: "المنتجات", path: "products/" }, { name: "URUKQI Import", path: "import/" }],
+    body,
+    styles: ["trade.css"],
+    active: "products",
+    bodyClass: "legacy-sections",
+    request: { need: "desktop" }
   });
 }
 
@@ -1110,6 +1147,7 @@ function main() {
   written.push(write("contact/index.html", contactPage()));
   written.push(write("automation/index.html", automationPage()));
   written.push(write("trade/index.html", tradePage()));
+  written.push(write("import/index.html", importPage()));
   ["privacy.html", "terms.html", "support.html"].forEach(f => written.push(write(f, legalPage(f))));
   written.push(write("404.html", notFoundPage()));
 
@@ -1121,7 +1159,7 @@ function main() {
     return;
   }
   const today = new Date().toISOString().slice(0, 10);
-  const urls = ["", "solutions/", "products/", "contact/", "sectors/", "automation/", "trade/"].concat(pageSectors.map(s => `sectors/${s.slug}/`));
+  const urls = ["", "solutions/", "products/", "contact/", "sectors/", "automation/", "trade/", "import/"].concat(pageSectors.map(s => `sectors/${s.slug}/`));
   written.push(write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url><loc>${SITE_URL}${u}</loc><lastmod>${today}</lastmod></url>`).join("\n")}
